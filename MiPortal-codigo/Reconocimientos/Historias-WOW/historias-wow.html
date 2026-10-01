@@ -1,0 +1,570 @@
+<!-- 
+  Guía Completa de Administración y Edición
+  1. Modificar el enlace del boton "Postular Caso Operativo":
+    Ubica la etiqueta <a class="btn btn-dark" href="#"> y edita la URL dentro de href=""
+    
+  2. Cómo editar la imagen de los casos reconocidos
+    Ubica la etiqueta: 👇🏽 y edita la URL dentro de src=""
+            <img
+              class="image-box-img"
+              src="LA URL AQUI"
+              alt="imagen"
+            />
+    
+  3. Cómo editar fecha y departamento
+    Edita el texto dentro de la etiqueta <span class="tag-date">...</span> 
+    
+  4. Cómo editar el titulo de la historia
+    Edita el texto que se encuentra dentro de la etiqueta <h2 class="story-title">...</h2>
+    
+  5. Cómo editar el cargo de la historia
+    Edita el texto que se encuentra dentro de la etiqueta <p class="story-role">...</span>
+
+  6. Cómo editar la descripción de la historia
+    Edita el texto que se encuentra dentro de la etiqueta  <p class="story-desc">...</p>
+-->
+
+<html>
+  <head>
+    <!-- Carga de Fuentes de Google e Iconos de Material -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0"
+    />
+
+    <!-- Estilos CSS Nativos -->
+    <style>
+      :root {
+        --brand-yellow: #ffd200;
+        --brand-yellowHover: #e6bd00;
+        --brand-dark: #111827;
+        --brand-textSecondary: #64748b;
+        --brand-border: #e5e7eb;
+      }
+
+      .embed-wrapper-2 {
+        font-family: "Inter", sans-serif;
+      }
+
+      .stories-container {
+        max-width: 72rem;
+        margin: 0 auto;
+        display: flex;
+        flex-direction: column;
+        gap: 2.5rem;
+      }
+
+      /* Tarjeta Base de Historia */
+      .story-card {
+        background-color: #ffffff;
+        border-radius: 1rem;
+        border: 1px solid var(--brand-border);
+        box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+        overflow: hidden;
+        display: grid;
+        grid-template-columns: 1fr;
+        min-height: 420px;
+        transition: box-shadow 0.2s ease;
+      }
+
+      .story-card:hover {
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+      }
+
+      @media (min-width: 1024px) {
+        .story-card {
+          grid-template-columns: repeat(12, 1fr);
+          max-height: 420px;
+        }
+      }
+
+      /* Espacio de Imagen */
+      .image-box {
+        /* display: flex;
+        justify-content: center; */
+        margin: 0;
+        min-height: 280px;
+        max-height: 500px;
+      }
+
+      .image-box-img {
+        object-fit: cover;
+        width: 100%;
+        height: 100%;
+      }
+
+      @media (min-width: 1024px) {
+        .image-box {
+          min-height: 100%;
+        }
+      }
+
+      /* Contenido de Texto de la Historia */
+      .text-content {
+        padding: 1.5rem;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        gap: 1.5rem;
+      }
+
+      @media (min-width: 640px) {
+        .text-content {
+          padding: 2rem;
+        }
+      }
+
+      /* Orden visual para dispositivos (Intercalado) */
+      .img-left {
+        border-bottom: 1px solid var(--brand-border);
+      }
+      .img-right {
+        border-top: 1px solid var(--brand-border);
+      }
+
+      /* Lógica de orden inverso en móviles para la sección 2 y 4 */
+      .story-reverse .text-content {
+        order: 2;
+      }
+      .story-reverse .image-box {
+        order: 1;
+      }
+
+      @media (min-width: 1024px) {
+        .img-left {
+          border-bottom: none;
+          border-right: 1px solid var(--brand-border);
+          grid-column: span 5;
+        }
+        .text-right {
+          grid-column: span 7;
+        }
+
+        .img-right {
+          border-top: none;
+          border-left: 1px solid var(--brand-border);
+          grid-column: span 5;
+        }
+        .text-left {
+          grid-column: span 7;
+        }
+
+        /* Restaurar el orden en escritorio para que la imagen quede a la derecha */
+        .story-reverse .text-content {
+          order: 1;
+        }
+        .story-reverse .image-box {
+          order: 2;
+        }
+      }
+
+      /* Etiquetas (Tags) */
+      .tags-row {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: space-between;
+        gap: 0.5rem;
+        margin-bottom: 0.75rem;
+      }
+
+      .tag-date {
+        font-size: 0.75rem;
+        font-weight: 600;
+        padding: 0.25rem 0.625rem;
+        border-radius: 0.375rem;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.25rem;
+        color: #b45309;
+        background-color: #fffbeb;
+        border: 1px solid #fde68a;
+      }
+
+      .tag-status-emerald {
+        color: #047857;
+        background-color: #ecfdf5;
+        border: 1px solid #a7f3d0;
+      }
+      .dot-emerald {
+        width: 0.375rem;
+        height: 0.375rem;
+        border-radius: 9999px;
+        background-color: #10b981;
+      }
+
+      .tag-status-blue {
+        color: #1d4ed8;
+        background-color: #eff6ff;
+        border: 1px solid #bfdbfe;
+      }
+      .dot-blue {
+        width: 0.375rem;
+        height: 0.375rem;
+        border-radius: 9999px;
+        background-color: #3b82f6;
+      }
+
+      .tag-status-purple {
+        color: #6d28d9;
+        background-color: #f5f3ff;
+        border: 1px solid #ddd6fe;
+      }
+      .dot-purple {
+        width: 0.375rem;
+        height: 0.375rem;
+        border-radius: 9999px;
+        background-color: #8b5cf6;
+      }
+
+      /* Tipografía de la Tarjeta */
+      .story-title {
+        font-size: 1.5rem;
+        font-weight: 700;
+        color: var(--brand-dark);
+        line-height: 1.375;
+        margin: 0 0 0.5rem 0;
+      }
+
+      .story-role {
+        font-size: 0.75rem;
+        font-weight: 600;
+        color: #d97706;
+        text-transform: uppercase;
+        letter-spacing: 0.025em;
+        margin: 0 0 0.75rem 0;
+      }
+
+      .story-desc {
+        font-size: 0.875rem;
+        color: #475569;
+        line-height: 1.625;
+        margin: 0 0 1rem 0;
+      }
+
+      .story-quote {
+        padding: 0.875rem;
+        background-color: #f8fafc;
+        border-radius: 0.75rem;
+        border-left: 4px solid var(--brand-yellow);
+        font-size: 0.75rem;
+        font-style: italic;
+        color: #334155;
+        margin: 0;
+      }
+
+      /* Botones Generales */
+      .btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.375rem;
+        font-size: 0.75rem;
+        font-weight: 600;
+        padding: 0.5rem 1rem;
+        border-radius: 0.5rem;
+        text-decoration: none;
+        border: none;
+        cursor: pointer;
+        transition: background-color 0.2s ease;
+        box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+      }
+
+      .btn .material-symbols-outlined {
+        font-size: 0.875rem;
+      }
+
+      /* Tarjeta de Llamado a la Acción (CTA) Final */
+      .cta-section {
+        background-color: #ffffff;
+        border-radius: 1rem;
+        border: 1px solid var(--brand-border);
+        padding: 1.5rem;
+        margin-bottom: 2rem;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: space-between;
+        gap: 1.5rem;
+        box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+        text-align: center;
+      }
+
+      @media (min-width: 640px) {
+        .cta-section {
+          flex-direction: row;
+          padding: 2rem;
+          text-align: left;
+        }
+      }
+
+      .cta-content {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 1rem;
+      }
+
+      @media (min-width: 640px) {
+        .cta-content {
+          flex-direction: row;
+        }
+      }
+
+      .cta-icon-box {
+        width: 3rem;
+        height: 3rem;
+        border-radius: 0.75rem;
+        background-color: #fef3c7;
+        color: #d97706;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+      }
+
+      .cta-icon-box .material-symbols-outlined {
+        font-size: 1.5rem;
+      }
+
+      .cta-title {
+        font-size: 1rem;
+        font-weight: 700;
+        color: var(--brand-dark);
+        margin: 0 0 0.25rem 0;
+      }
+
+      .cta-desc {
+        font-size: 0.75rem;
+        color: var(--brand-textSecondary);
+        margin: 0;
+      }
+
+      @media (min-width: 640px) {
+        .cta-desc {
+          font-size: 0.875rem;
+        }
+      }
+
+      .btn-dark {
+        background-color: var(--brand-dark);
+        color: #ffffff;
+        padding: 0.625rem 1.25rem;
+        border-radius: 0.75rem;
+        flex-shrink: 0;
+      }
+
+      .btn-dark:hover {
+        background-color: #1e293b;
+      }
+
+      .btn-dark .material-symbols-outlined {
+        color: var(--brand-yellow);
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Estructura HTML -->
+    <div class="embed-wrapper-2">
+      <section class="cta-section">
+        <div class="cta-content">
+          <div class="cta-icon-box">
+            <span class="material-symbols-outlined">campaign</span>
+          </div>
+          <div>
+            <h3 class="cta-title">
+              ¿Tienes un caso de gestión destacada en tu equipo?
+            </h3>
+            <p class="cta-desc">
+              Postula la historia de un colega operativo para ser destacada en
+              la próxima edición mensual de Historias WOW!
+            </p>
+          </div>
+        </div>
+        <!-- Boton para Postular Caso Operativo -->
+        <a class="btn btn-dark" href="#">
+          <span class="material-symbols-outlined">how_to_reg</span>
+          Postular Caso Operativo
+        </a>
+      </section>
+
+      <div class="stories-container">
+        <!-- Sección 1: Imagen a la izquierda, Texto a la derecha -->
+        <section class="story-card">
+          <!-- Imagen (Izquierda) -->
+          <figure class="image-box img-left">
+            <img
+              class="image-box-img"
+              src="https://i.ibb.co/YFmjRw4f/trebol-micasino.png"
+              alt="imagen"
+            />
+          </figure>
+
+          <!-- Contenido de Texto (Derecha) -->
+          <div class="text-content text-right">
+            <div>
+              <div class="tags-row">
+                <span class="tag-date"
+                  >25 de Septiembre 2026 · Customer Service</span
+                >
+              </div>
+              <h2 class="story-title">
+                Mariana Gómez: Liderazgo y Sangre Fría ante Evento de Alta
+                Demanda
+              </h2>
+              <p class="story-role">
+                Supervisora de Operaciones &amp; Control en Vivo
+              </p>
+              <p class="story-desc">
+                Durante la final del torneo regional deportivo con más de
+                120,000 conexiones concurrentes, Mariana detectó una desviación
+                anómala de latencia en la pasarela de apuestas rápidas. Activó
+                el protocolo de contingencia Nivel 2 en menos de 90 segundos,
+                redirigiendo el flujo hacia los servidores espejo sin
+                interrumpir una sola sesión de usuario ni generar rechazos de
+                tickets.
+              </p>
+              <!-- <blockquote class="story-quote">
+                "La clave no fue solo tener el plan de emergencia, sino la
+                sincronización milimétrica con el equipo de infraestructura.
+                Mantener al usuario jugando con total fluidez es nuestra mayor
+                recompensa."
+              </blockquote> -->
+            </div>
+          </div>
+        </section>
+
+        <!-- Sección 2: Cuadro de Texto a la izquierda, Imagen a la derecha -->
+        <section class="story-card story-reverse">
+          <!-- Contenido de Texto (Izquierda) -->
+          <div class="text-content text-left">
+            <div>
+              <div class="tags-row">
+                <span class="tag-date"
+                  >20 Septiembre 2026 · Monitoreo y Fraude</span
+                >
+              </div>
+              <h2 class="story-title">
+                Fernando Castillo: Detección Temprana y Blindaje Anti-Fraude
+              </h2>
+              <p class="story-role">
+                Especialista Senior en Monitoreo de Riesgo &amp; Fraude
+                Operativo
+              </p>
+              <p class="story-desc">
+                Fernando identificó un patrón anómalo de retiros automatizados
+                con micro-transacciones coordinadas que simulaban comportamiento
+                orgánico. A través de un análisis exhaustivo de telemetría y
+                reglas heurísticas avanzadas, logró neutralizar el ataque antes
+                del primer cobro indebido, protegiendo un fondo operativo
+                superior a $85,000 USD.
+              </p>
+              <!-- <blockquote class="story-quote">
+                "La seguridad del casino no descansa. Saber que cada reporte y
+                cada validación protege tanto el patrimonio de la empresa como
+                la transparencia para los jugadores honestos es lo que nos
+                impulsa a estar un paso adelante."
+              </blockquote> -->
+            </div>
+          </div>
+
+          <!-- Espacio Vacío para Imagen (Derecha) -->
+          <figure class="image-box img-right">
+            <img
+              class="image-box-img"
+              src="https://i.ibb.co/YFmjRw4f/trebol-micasino.png"
+              alt="imagen"
+            />
+          </figure>
+        </section>
+
+        <!-- Sección 3: Imagen a la izquierda, Texto a la derecha -->
+        <section class="story-card">
+          <!-- Espacio Vacío para Imagen (Izquierda) -->
+          <figure class="image-box img-left">
+            <img
+              class="image-box-img"
+              src="https://i.ibb.co/YFmjRw4f/trebol-micasino.png"
+              alt="imagen"
+            />
+          </figure>
+
+          <!-- Contenido de Texto (Derecha) -->
+          <div class="text-content text-right">
+            <div>
+              <div class="tags-row">
+                <span class="tag-date">05 septiembre 2025 · Producto VIP</span>
+              </div>
+              <h2 class="story-title">
+                Elena Valenzuela: Empatía y Resolución Inmediata en Mesa VIP
+              </h2>
+              <p class="story-role">
+                Líder de Soporte Operativo y Atención al Jugador VIP
+              </p>
+              <p class="story-desc">
+                Frente a una incongruencia técnica entre el proveedor de slots
+                externo y el saldo local durante una sesión de alto volumen,
+                Elena asumió personalmente la coordinación entre proveedores,
+                finanzas y el usuario. En menos de 20 minutos recalculó y
+                acreditó la partida con total transparencia, convirtiendo una
+                queja crítica en una felicitación formal del usuario por
+                excelencia en atención.
+              </p>
+              <!-- <blockquote class="story-quote">
+                "La empatía no es solo ser amable; es actuar rápido con datos en
+                mano y darle certidumbre al usuario en su momento de mayor duda.
+                Eso define el servicio WOW."
+              </blockquote> -->
+            </div>
+          </div>
+        </section>
+
+        <!-- Sección 4: Cuadro de Texto a la izquierda, Imagen a la derecha -->
+        <section class="story-card story-reverse">
+          <!-- Contenido de Texto (Izquierda) -->
+          <div class="text-content text-left">
+            <div>
+              <div class="tags-row">
+                <span class="tag-date">19 Agosto 2026 · Soporte Técnico</span>
+              </div>
+              <h2 class="story-title">
+                Camila Roldán: Despliegue Express y Cero Minutos de Tiempo
+                Muerto
+              </h2>
+              <p class="story-role">
+                Supervisora Técnica de Infraestructura y Terminales Físicas
+              </p>
+              <p class="story-desc">
+                Durante la actualización mandatoria de firmware de seguridad en
+                las terminales integradas y consolas de monitoreo, Camila
+                rediseñó el cronograma de despliegue en micro-lotes nocturnos.
+                Logró migrar 150 terminales operativas reduciendo el tiempo
+                estimado de mantenimiento en un 60%, sin registrar un solo
+                minuto de inactividad durante las operaciones comerciales.
+              </p>
+              <!-- <blockquote class="story-quote">
+                "El mejor soporte técnico es aquel que ocurre sin que nadie lo
+                perciba: cuando el sistema simplemente funciona de forma
+                impecable y el negocio sigue facturando."
+              </blockquote> -->
+            </div>
+          </div>
+
+          <!-- Espacio Vacío para Imagen (Derecha) -->
+          <figure class="image-box img-right">
+            <img
+              class="image-box-img"
+              src="https://i.ibb.co/YFmjRw4f/trebol-micasino.png"
+              alt="imagen"
+            />
+          </figure>
+        </section>
+      </div>
+    </div>
+  </body>
+</html>

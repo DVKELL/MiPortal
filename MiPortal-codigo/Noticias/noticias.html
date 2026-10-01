@@ -1,0 +1,630 @@
+<!-- 
+Guía rápida para la persona encargada
+
+    Para ELIMINAR una noticia: Simplemente borra todo el bloque delimitado por <!- ================= NOTICIA X ================= -> hasta <!- FIN NOTICIA X ->.
+
+    Para AÑADIR una noticia: Copia una plantilla entera de noticia y pégala al final del contenedor <div class="news-grid">. Luego modifica solo los textos dentro de las etiquetas señaladas.
+
+    Para CAMBIAR el orden: Simplemente mueve el bloque completo de la noticia arriba o abajo dentro de la grilla. 
+-->
+<html>
+  <head>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
+      rel="stylesheet"
+    />
+
+    <style>
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+        font-family: "Inter", sans-serif;
+      }
+
+      body {
+        background-color: transparent;
+        padding: 16px;
+      }
+
+      /* Grilla 3 Columnas */
+      .news-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 24px;
+        width: 100%;
+      }
+
+      /* Estructura de Tarjeta */
+      .news-card {
+        background-color: #ffffff;
+        border: 1px solid rgba(225, 227, 228, 0.8);
+        border-radius: 12px;
+        overflow: hidden;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+        display: flex;
+        flex-direction: column;
+        transition: all 0.2s ease;
+      }
+
+      .news-card:hover {
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        border-color: rgba(114, 92, 0, 0.5);
+      }
+
+      /* Imagen y Etiqueta Category */
+      .card-media {
+        position: relative;
+        width: 100%;
+        aspect-ratio: 16 / 9;
+        overflow: hidden;
+        background-color: #edeeef;
+      }
+
+      .card-img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.3s ease;
+      }
+
+      .news-card:hover .card-img {
+        transform: scale(1.05);
+      }
+
+      .priority-tag {
+        position: absolute;
+        top: 12px;
+        left: 12px;
+        background-color: rgba(25, 28, 29, 0.9);
+        backdrop-filter: blur(4px);
+        color: #ffe07c;
+        font-size: 11px;
+        font-weight: 600;
+        padding: 4px 10px;
+        border-radius: 9999px;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+      }
+
+      /* Estilo Especial para Tarjeta sin Imagen (Fallback/Juego Responsable) */
+      .card-media-placeholder {
+        background: linear-gradient(135deg, #1c1d21 0%, #2e3132 100%);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        padding: 24px;
+      }
+
+      .placeholder-icon {
+        width: 48px;
+        height: 48px;
+        border-radius: 50%;
+        background-color: rgba(255, 210, 0, 0.2);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #ffd200;
+        margin: 0 auto 8px auto;
+      }
+
+      .placeholder-text {
+        color: #ffe07c;
+        font-size: 12px;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+      }
+
+      /* Cuerpo de la Tarjeta */
+      .card-body {
+        padding: 24px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        flex-grow: 1;
+        gap: 24px;
+      }
+
+      .card-meta {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        color: #4d4632;
+        font-size: 12px;
+        font-weight: 600;
+        margin-bottom: 8px;
+      }
+
+      .card-meta .material-symbols-outlined {
+        font-size: 15px;
+        color: #5d5e61;
+      }
+
+      .meta-divider {
+        color: #e1e3e4;
+      }
+
+      .card-title {
+        font-size: 18px;
+        line-height: 1.35;
+        font-weight: 700;
+        color: #191c1d;
+        margin-bottom: 8px;
+        transition: color 0.2s ease;
+      }
+
+      .news-card:hover .card-title {
+        color: #725c00;
+      }
+
+      .card-excerpt {
+        font-size: 14px;
+        line-height: 20px;
+        color: #4d4632;
+        display: -webkit-box;
+        -webkit-line-clamp: 3;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+      }
+
+      /* Botón / Link */
+      .card-link {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        color: #725c00;
+        font-weight: 600;
+        font-size: 14px;
+        text-decoration: none;
+        width: fit-content;
+        transition:
+          transform 0.2s ease,
+          color 0.2s ease;
+      }
+
+      .news-card:hover .card-link {
+        transform: translateX(4px);
+        color: #705b00;
+      }
+
+      /* Breakpoints Adaptativos */
+      @media (max-width: 1024px) {
+        .news-grid {
+          grid-template-columns: repeat(2, 1fr);
+        }
+      }
+
+      @media (max-width: 640px) {
+        .news-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
+  </head>
+
+  <!-- CONTENEDOR PRINCIPAL DE NOTICIAS -->
+  <div class="news-grid">
+    <!-- ================= NOTICIA 1 ================= -->
+    <article class="news-card">
+      <div class="card-media">
+        <!-- 1. IMAGEN: Pega el enlace de tu imagen dentro de las comillas de src="" -->
+        <img
+          class="card-img"
+          src="https://i.ibb.co/TDsGnpdX/Nuevo-Portal.png"
+          alt="Lanzamiento Aurora Intranet"
+        />
+        <!-- 2. ETIQUETA DE PRIORIDAD: Cambia el texto (ej: Importante, Urgente, Informativo) -->
+        <span class="priority-tag">Importante</span>
+      </div>
+
+      <div class="card-body">
+        <div>
+          <div class="card-meta">
+            <span class="material-symbols-outlined">calendar_today</span>
+            <!-- 3. FECHA: Fecha de publicación -->
+            <span>15 Oct 2024</span>
+            <span class="meta-divider">•</span>
+            <!-- 4. ÁREA O DEPARTAMENTO: Nombre del área que publica -->
+            <span>Control y Procesos</span>
+          </div>
+
+          <!-- 5. TÍTULO: Título principal de la noticia -->
+          <h2 class="card-title">
+            Lanzamiento Oficial del Nuevo Portal Corporativo Aurora
+          </h2>
+
+          <!-- 6. RESUMEN: Breve descripción de la noticia (máximo 3 líneas) -->
+          <p class="card-excerpt">
+            Presentamos la nueva arquitectura unificada para conectar
+            operaciones globales, gestión documental ágil y herramientas de
+            productividad diaria para todos los equipos.
+          </p>
+        </div>
+
+        <!-- 7. ENLACE: Reemplaza el # en href="#" por el link a la página completa o PDF -->
+        <a
+          class="card-link"
+          href="https://sites.google.com/correomc.com/portal-coporativo-micasino/noticias/noticia-1"
+        >
+          <span>Leer Más &rarr;</span>
+        </a>
+      </div>
+    </article>
+    <!-- ================= FIN NOTICIA 1 ================= -->
+
+    <!-- ================= NOTICIA 2 ================= -->
+    <article class="news-card">
+      <div class="card-media">
+        <!-- 1. IMAGEN: Enlace directo a la imagen -->
+        <img
+          class="card-img"
+          src="https://plus.unsplash.com/premium_photo-1684330691489-2eb2620db612?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+          alt="Plataforma de Procesos"
+        />
+        <!-- 2. ETIQUETA DE PRIORIDAD: (ej: Importante, Urgente, Informativo) -->
+        <span class="priority-tag">IMPORTANTE</span>
+      </div>
+
+      <div class="card-body">
+        <div>
+          <div class="card-meta">
+            <span class="material-symbols-outlined">calendar_today</span>
+            <!-- 3. FECHA -->
+            <span>14 Oct 2024</span>
+            <span class="meta-divider">•</span>
+            <!-- 4. ÁREA O DEPARTAMENTO -->
+            <span>KPI's</span>
+          </div>
+
+          <!-- 5. TÍTULO -->
+          <h2 class="card-title">
+            Modernización de Checklists Digitales y Flujos de Auditoría
+          </h2>
+
+          <!-- 6. RESUMEN -->
+          <p class="card-excerpt">
+            La dirección de operaciones estandariza los procesos de control de
+            calidad mediante tableros dinámicos en tiempo real que optimizan la
+            trazabilidad operativa.
+          </p>
+        </div>
+
+        <!-- 7. ENLACE: Reemplaza el # por la URL del documento o página -->
+        <a
+          class="card-link"
+          href="https://sites.google.com/correomc.com/portal-coporativo-micasino/noticias/noticia-2"
+        >
+          <span>Leer Más &rarr;</span>
+        </a>
+      </div>
+    </article>
+    <!-- ================= FIN NOTICIA 2 ================= -->
+
+    <!-- ================= NOTICIA 3 ================= -->
+    <article class="news-card">
+      <div class="card-media">
+        <!-- 1. IMAGEN: Enlace directo a la imagen -->
+        <img
+          class="card-img"
+          src="https://images.unsplash.com/photo-1622675205169-901710ac8643?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+          alt="Liderazgo Estratégico"
+        />
+        <!-- 2. ETIQUETA DE PRIORIDAD: (ej: Importante, Urgente, Informativo) -->
+        <span class="priority-tag">Importante</span>
+      </div>
+
+      <div class="card-body">
+        <div>
+          <div class="card-meta">
+            <span class="material-symbols-outlined">calendar_today</span>
+            <!-- 3. FECHA -->
+            <span>12 Oct 2024</span>
+            <span class="meta-divider">•</span>
+            <!-- 4. ÁREA O DEPARTAMENTO -->
+            <span>Talento Humano</span>
+          </div>
+
+          <!-- 5. TÍTULO -->
+          <h2 class="card-title">
+            Transición de Liderazgo Estratégico y Reorganización
+          </h2>
+
+          <!-- 6. RESUMEN -->
+          <p class="card-excerpt">
+            La Junta Directiva anuncia el nombramiento de la nueva dirección
+            ejecutiva regional para liderar la siguiente etapa de consolidación
+            financiera e innovación tecnológica.
+          </p>
+        </div>
+
+        <!-- 7. ENLACE: Reemplaza el # por la URL del documento o página -->
+        <a class="card-link" href="#">
+          <span>Leer Más &rarr;</span>
+        </a>
+      </div>
+    </article>
+    <!-- ================= FIN NOTICIA 3 ================= -->
+
+    <!-- ================= NOTICIA 4 ================= -->
+    <article class="news-card">
+      <div class="card-media">
+        <!-- 1. IMAGEN: Enlace directo a la imagen -->
+        <img
+          class="card-img"
+          src="https://i.ibb.co/fYb8r2Xx/Cierre-Peru.png"
+          alt="Comunicado Oficial"
+        />
+        <!-- 2. ETIQUETA DE PRIORIDAD: (ej: Importante, Urgente, Informativo) -->
+        <span class="priority-tag">Importante</span>
+      </div>
+
+      <div class="card-body">
+        <div>
+          <div class="card-meta">
+            <span class="material-symbols-outlined">calendar_today</span>
+            <!-- 3. FECHA -->
+            <span>10 Oct 2024</span>
+            <span class="meta-divider">•</span>
+            <!-- 4. ÁREA O DEPARTAMENTO -->
+            <span>Junta Directiva</span>
+          </div>
+
+          <!-- 5. TÍTULO -->
+          <h2 class="card-title">
+            Comunicado Oficial: Ajuste de Operaciones y Estructura Regional
+          </h2>
+
+          <!-- 6. RESUMEN -->
+          <p class="card-excerpt">
+            Notificación formal sobre la conclusión estratégica de actividades
+            en la filial Perú y los planes de soporte y reubicación para los
+            colaboradores afectados.
+          </p>
+        </div>
+
+        <!-- 7. ENLACE: Reemplaza el # por la URL del documento o página -->
+        <a class="card-link" href="#">
+          <span>Leer Más &rarr;</span>
+        </a>
+      </div>
+    </article>
+    <!-- ================= FIN NOTICIA 4 ================= -->
+
+    <!-- ================= NOTICIA 5 ================= -->
+    <article class="news-card">
+      <div class="card-media">
+        <!-- 1. IMAGEN -->
+        <img
+          class="card-img"
+          src="https://lh3.googleusercontent.com/aida-public/AB6AXuAiz5h5GV5Si05Gvs246aWLd8XRHbPM-X8NfNNnAXuz85BFX3YABYsShau5E_eGOiypL1dcDQ50CeIV0l-Ps_WgaTGKbiqr5eBrMmmaMPTSu5pwkUbT54rhZ8OsOv7gm25jQvGY9cgs7DxNGpgGxyIWFvTkgzodsB9_l5SyIg1bnPTvwI5YUrHRKG8jDG3PPCFNjeTmY9jN6aZUbxRDJve52dIYKNhzzevc86DofNtdlzVusCDjCVyG"
+          alt="Bienestar y Salud"
+        />
+        <!-- 2. ETIQUETA DE PRIORIDAD -->
+        <span class="priority-tag">Informativo</span>
+      </div>
+
+      <div class="card-body">
+        <div>
+          <div class="card-meta">
+            <span class="material-symbols-outlined">calendar_today</span>
+            <!-- 3. FECHA -->
+            <span>08 Oct 2024</span>
+            <span class="meta-divider">•</span>
+            <!-- 4. ÁREA O DEPARTAMENTO -->
+            <span>Talento Humano</span>
+          </div>
+
+          <!-- 5. TÍTULO -->
+          <h2 class="card-title">
+            Nuevos Beneficios de Bienestar y Salud para Empleados
+          </h2>
+
+          <!-- 6. RESUMEN -->
+          <p class="card-excerpt">
+            Ampliamos el programa de bienestar integral con cobertura de salud
+            preventiva, convenios de entrenamiento físico y asesorías de salud
+            mental corporativa.
+          </p>
+        </div>
+
+        <!-- 7. ENLACE -->
+        <a class="card-link" href="#">
+          <span>Leer Más &rarr;</span>
+        </a>
+      </div>
+    </article>
+    <!-- ================= FIN NOTICIA 5 ================= -->
+
+    <!-- ================= NOTICIA 6 ================= -->
+    <article class="news-card">
+      <div class="card-media">
+        <!-- 1. IMAGEN -->
+        <img
+          class="card-img"
+          src="https://lh3.googleusercontent.com/aida-public/AB6AXuAGTjvn5hu_knNdyJBKtRZjaKTtLd1_rfYoTxR8e7HQZy5JkoA40Xc19UtYg9vdIC80yiGICb7jg0yasidc5Xfd8ELXhOshE_H64cW2wD2ULbWk6x-BIy9YZPDcqzFWpzXW8lfSgmoaF8LMvYu8ZxbQYEkgVx6Dk3RQcHR07ygzaZVCSezpzufTy4t_0TKR3n8bj9A-FzByah3AeC8LS43DDay1okUBb75EnHg0oFVdjQKlL15YeMan"
+          alt="Actualización Servidores"
+        />
+        <!-- 2. ETIQUETA DE PRIORIDAD -->
+        <span class="priority-tag">IMPORTANTE</span>
+      </div>
+
+      <div class="card-body">
+        <div>
+          <div class="card-meta">
+            <span class="material-symbols-outlined">calendar_today</span>
+            <!-- 3. FECHA -->
+            <span>05 Oct 2024</span>
+            <span class="meta-divider">•</span>
+            <!-- 4. ÁREA O DEPARTAMENTO -->
+            <span>Tecnología</span>
+          </div>
+
+          <!-- 5. TÍTULO -->
+          <h2 class="card-title">
+            Actualización Global de Servidores y Ciberseguridad
+          </h2>
+
+          <!-- 6. RESUMEN -->
+          <p class="card-excerpt">
+            Finalizó exitosamente el despliegue del cluster de alta
+            disponibilidad, reduciendo la latencia de transacciones en un 40% y
+            reforzando los protocolos de encriptación.
+          </p>
+        </div>
+
+        <!-- 7. ENLACE -->
+        <a class="card-link" href="#">
+          <span>Leer Más &rarr;</span>
+        </a>
+      </div>
+    </article>
+    <!-- ================= FIN NOTICIA 6 ================= -->
+
+    <!-- ================= NOTICIA 7 ================= -->
+    <article class="news-card">
+      <div class="card-media">
+        <!-- 1. IMAGEN -->
+        <img
+          class="card-img"
+          src="https://lh3.googleusercontent.com/aida-public/AB6AXuA6-D_guMoItXJ4ukKJqanjnrgRrEe56W1z1ke2LzTFiQhX4sEl_IIuBPrDD9B3OTRCw4_62vO-iwlzlslg1tZBb5f1FBowyaN5PG5b6by2ewJkDq5fWDfvaJcwgiygsElO597Z3AUYMqWH-f0MU_oa_E-t07J3KsMe423SDYtL9B7IsTXrzU2CJldcOUt3WhZdQeKeHMWo0HOQH3qQK2iRr1tCAClZnjdpTxlvJ17G_NGktcz4f-cT"
+          alt="Gala Corporativa"
+        />
+        <!-- 2. ETIQUETA DE PRIORIDAD -->
+        <span class="priority-tag">Informativo</span>
+      </div>
+
+      <div class="card-body">
+        <div>
+          <div class="card-meta">
+            <span class="material-symbols-outlined">calendar_today</span>
+            <!-- 3. FECHA -->
+            <span>02 Oct 2024</span>
+            <span class="meta-divider">•</span>
+            <!-- 4. ÁREA O DEPARTAMENTO -->
+            <span>Marketing</span>
+          </div>
+
+          <!-- 5. TÍTULO -->
+          <h2 class="card-title">
+            Gala Anual de Reconocimiento y Excelencia Corporativa
+          </h2>
+
+          <!-- 6. RESUMEN -->
+          <p class="card-excerpt">
+            Se abren las votaciones para las nominaciones de líderes de proyecto
+            destacados. Conoce las bases y los reconocimientos especiales que se
+            entregarán en la gala anual.
+          </p>
+        </div>
+
+        <!-- 7. ENLACE -->
+        <a class="card-link" href="#">
+          <span>Leer Más &rarr;</span>
+        </a>
+      </div>
+    </article>
+    <!-- ================= FIN NOTICIA 7 ================= -->
+
+    <!-- ================= NOTICIA 8 ================= -->
+    <article class="news-card">
+      <div class="card-media">
+        <!-- 1. IMAGEN -->
+        <img
+          class="card-img"
+          src="https://lh3.googleusercontent.com/aida-public/AB6AXuBKi3oTUZY9QJ6WLlFJa4nZTkchvCBN4aJAYTiANha85xNaIWcQEHqTvayT33iq-08Basdfzbu_k0psYxH_B4r_Gp41UfUOl4W_SPB3l1UP_E-qtHPvBVYX2hfrTzIgxZHEHkr3UaqvCUck597nb6bX_kYqEqotKTESjGMv2RCwiN73BzndqOcha0OeHytuy0H-fH53oRBZzk-WtFU_basdaW83CKHg7pUq0sgsGbKxc6ktWQTomNt8"
+          alt="Resultados Financieros"
+        />
+        <!-- 2. ETIQUETA DE PRIORIDAD -->
+        <span class="priority-tag">CRITICO</span>
+      </div>
+
+      <div class="card-body">
+        <div>
+          <div class="card-meta">
+            <span class="material-symbols-outlined">calendar_today</span>
+            <!-- 3. FECHA -->
+            <span>28 Sep 2024</span>
+            <span class="meta-divider">•</span>
+            <!-- 4. ÁREA O DEPARTAMENTO -->
+            <span>Importante</span>
+          </div>
+
+          <!-- 5. TÍTULO -->
+          <h2 class="card-title">
+            Cierre Financiero Q3: Crecimiento Sólido en Mercados Clave
+          </h2>
+
+          <!-- 6. RESUMEN -->
+          <p class="card-excerpt">
+            El informe preliminar del tercer trimestre destaca un rendimiento
+            récord en volumen de apuestas digitales y eficiencia de costos
+            operacionales en las divisiones centrales.
+          </p>
+        </div>
+
+        <!-- 7. ENLACE -->
+        <a class="card-link" href="#">
+          <span>Leer Más &rarr;</span>
+        </a>
+      </div>
+    </article>
+    <!-- ================= FIN NOTICIA 8 ================= -->
+
+    <!-- ================= NOTICIA ESPECIAL 9 (SIN IMAGEN CON ÍCONO) ================= -->
+    <!-- Usa este formato si la noticia no lleva fotografía sino un aviso/ícono destacado -->
+    <article class="news-card">
+      <div class="card-media card-media-placeholder">
+        <div>
+          <div class="placeholder-icon">
+            <!-- Puedes cambiar "verified_user" por otro ícono de Google Icons (ej: info, warning, campaign) -->
+            <span class="material-symbols-outlined">verified_user</span>
+          </div>
+          <!-- Texto destacado debajo del ícono -->
+          <p class="placeholder-text">Juego Responsable</p>
+        </div>
+        <!-- ETIQUETA DE PRIORIDAD -->
+        <span class="priority-tag">Importante</span>
+      </div>
+
+      <div class="card-body">
+        <div>
+          <div class="card-meta">
+            <span class="material-symbols-outlined">calendar_today</span>
+            <!-- FECHA -->
+            <span>22 Sep 2024</span>
+            <span class="meta-divider">•</span>
+            <!-- ÁREA O DEPARTAMENTO -->
+            <span>Cumplimiento</span>
+          </div>
+
+          <!-- TÍTULO -->
+          <h2 class="card-title">
+            Actualización de Estándares de Juego Seguro y Cumplimiento
+          </h2>
+
+          <!-- RESUMEN -->
+          <p class="card-excerpt">
+            Reforzamos nuestros protocolos de monitoreo inteligente para la
+            protección al usuario y la adhesión estricta a normativas
+            internacionales de la industria iGaming.
+          </p>
+        </div>
+
+        <!-- ENLACE -->
+        <a
+          class="card-link"
+          href="https://sites.google.com/correomc.com/portal-coporativo-micasino/noticias/perro-2"
+        >
+          <span>Leer Más &rarr;</span>
+        </a>
+      </div>
+    </article>
+    <!-- ================= FIN NOTICIA ESPECIAL ================= -->
+  </div>
+</html>

@@ -1,0 +1,101 @@
+<!-- Solo es posible editar el titulo y el texto descriptivo 
+1. para editar el titulo, edite el texto dentro de la etiqueta  <h1 class="main-title">
+2. para editar el texto descriptivo, edite el texto dentro de la etiqueta <p class="main-description">
+
+-->
+
+<html>
+  <head>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
+      rel="stylesheet"
+    />
+
+    <style>
+      :root {
+        --font-family: "Inter", sans-serif;
+      }
+
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+        font-family: var(--font-family), sans-serif;
+      }
+
+      body {
+        background-color: transparent;
+        padding: 12px 16px;
+      }
+
+      .news-header {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        border-bottom: 1px solid rgba(225, 227, 228, 0.7);
+        padding-bottom: 24px;
+      }
+
+      .badge-channel {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        color: #725c00;
+        font-weight: 600;
+        font-size: 12px;
+        letter-spacing: 0.05em;
+        text-transform: uppercase;
+        margin-bottom: 6px;
+      }
+
+      .badge-dot {
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background-color: #ffd200;
+      }
+
+      .main-title {
+        font-size: 48px;
+        line-height: 40px;
+        font-weight: 700;
+        color: #191c1d;
+        letter-spacing: -0.01em;
+      }
+
+      .main-description {
+        font-size: 18px;
+        line-height: 24px;
+        color: #4d4632;
+        margin-top: 8px;
+        max-width: 800px;
+      }
+
+      @media (max-width: 768px) {
+        .main-title {
+          font-size: 24px;
+          line-height: 32px;
+        }
+      }
+    </style>
+  </head>
+  <div class="news-header">
+    <div class="badge-channel">
+      <span class="badge-dot"></span>
+      Canal de Comunicación Interna
+    </div>
+    <!-- =========================== TITULO =========================== -->
+    <h1 class="main-title">Noticias y Novedades Corporativas</h1>
+
+    <!-- =========================== PARRAFO =========================== -->
+    <p>
+      Información oficial, actualizaciones de proyectos clave, eventos
+      corporativos y comunicados estratégicos para todos los colaboradores de
+      Micasino.
+    </p>
+  </div>
+</html>

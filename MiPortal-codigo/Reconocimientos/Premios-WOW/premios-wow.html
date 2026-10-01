@@ -1,0 +1,721 @@
+<!-- 
+  Guía Completa de Administración y Edición
+  1. Cómo modificar el titulo principal:
+    Edita el texto que se encuentra dentro de la etiqueta <h2 class="section-title">...</h2> 
+    
+  2. Cómo editar el anuncio del último periodo
+    Edita el texto que se encuentra dentro de la etiqueta <span class="status-badge">...</span> 
+    
+  3. Cómo editar la imagen de los ganadores
+    ubica la etiqueta img con la clase class="card-img", edita la URL dentro de src=""
+    
+  4. Cómo editar el nombre de los ganadores
+    Edita el texto que se encuentra dentro de la etiqueta <h4 class="card-winner-name">...</h4>
+    
+  5. Cómo editar el cargo de los ganadores
+    Edita el texto que se encuentra dentro de la etiqueta <span class="card-winner-role">...</span>
+
+  6. Cómo editar la descripción de los ganadores
+    Edita el texto que se encuentra dentro de la etiqueta <p class="card-desc">... </p>
+ 
+  7. Cómo editar el icono del departamento de los ganadores
+    Edita el texto que se encuentra dentro de la etiqueta <span class="material-symbols-outlined icon-small"> con un icono valido de Material Icons
+      
+  8. Cómo editar el departamento de los ganadores
+    Edita el texto que se encuentra dentro de la etiqueta <span class="footer-dept">...</span>
+-->
+
+<html>
+  <head>
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0"
+    />
+
+    <style>
+      :root {
+        --bg-background: #f8f9fa;
+        --color-primary: #725c00;
+        --color-primary-container: #ffd200;
+        --color-on-primary-container: #705b00;
+        --color-primary-fixed-dim: #ecc200;
+        --color-on-surface: #191c1d;
+        --color-on-surface-variant: #4d4632;
+        --color-secondary: #5d5e61;
+        --color-tertiary: #5b5f64;
+        --color-surface-container: #edeeef;
+        --color-surface-container-low: #f3f4f5;
+        --color-surface-container-lowest: #ffffff;
+        --color-surface-variant: #e1e3e4;
+        --color-inverse-surface: #2e3132;
+        --font-family: "Inter", sans-serif;
+      }
+
+      body {
+        margin: 0;
+        padding: 0;
+        font-family: var(--font-family);
+        background-color: transparent;
+      }
+
+      .winners-section {
+        max-width: 1440px;
+        margin: 0 auto;
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        gap: 45px;
+        box-sizing: border-box;
+        padding: 0 4rem;
+      }
+
+      /* @media (min-width: 768px) {
+        .winners-section {
+          padding: 48px;
+        }
+      } */
+
+      .winners-header {
+        display: flex;
+        flex-direction: column;
+        gap: 24px;
+      }
+
+      @media (min-width: 768px) {
+        .winners-header {
+          flex-direction: row;
+          align-items: flex-end;
+          justify-content: space-between;
+        }
+      }
+
+      .header-titles {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+      }
+
+      .badge-label {
+        font-size: 12px;
+        line-height: 16px;
+        letter-spacing: 0.05em;
+        font-weight: 700;
+        text-transform: uppercase;
+        color: var(--color-primary);
+      }
+
+      .section-title {
+        margin: 0;
+        font-size: 48px;
+        line-height: 1.2;
+        letter-spacing: -0.01em;
+        font-weight: 700;
+        color: var(--color-on-surface);
+      }
+
+      .title-highlight {
+        position: relative;
+        display: inline-block;
+        color: var(--color-on-surface);
+      }
+
+      .title-underline {
+        position: absolute;
+        left: 0;
+        bottom: -6px;
+        width: 100%;
+        height: 4px;
+        background-color: var(--color-primary-container);
+        border-radius: 999px;
+      }
+
+      .header-status {
+        display: flex;
+        align-items: center;
+        gap: 16px;
+      }
+
+      .status-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 8px 16px;
+        border-radius: 8px;
+        background-color: var(--color-surface-container);
+        font-size: 14px;
+        line-height: 20px;
+        color: var(--color-on-surface-variant);
+      }
+
+      .status-dot {
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        background-color: var(--color-primary-container);
+      }
+
+      .golden-winner-card {
+        width: 100%;
+        background: linear-gradient(
+          135deg,
+          var(--color-surface-container-lowest) 0%,
+          var(--color-surface-container-low) 50%,
+          rgba(255, 210, 0, 0.1) 100%
+        );
+        border-radius: 16px;
+        padding: 24px;
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 40px;
+        position: relative;
+        overflow: hidden;
+        box-sizing: border-box;
+      }
+
+      @media (min-width: 768px) {
+        .golden-winner-card {
+          padding: 48px;
+        }
+      }
+
+      @media (min-width: 1024px) {
+        .golden-winner-card {
+          flex-direction: row;
+        }
+      }
+
+      .golden-blur-effect {
+        position: absolute;
+        right: -64px;
+        top: -64px;
+        width: 320px;
+        height: 320px;
+        border-radius: 50%;
+        background-color: rgba(255, 210, 0, 0.2);
+        filter: blur(48px);
+        pointer-events: none;
+      }
+
+      .golden-img-wrapper {
+        position: relative;
+        width: 192px;
+        height: 192px;
+        flex-shrink: 0;
+        border-radius: 16px;
+        overflow: hidden;
+        box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+        background-color: var(--color-surface-container);
+      }
+
+      @media (min-width: 768px) {
+        .golden-img-wrapper {
+          width: 256px;
+          height: 256px;
+        }
+      }
+
+      .winner-img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+
+      .golden-badge {
+        position: absolute;
+        top: 12px;
+        left: 12px;
+        background-color: rgba(46, 49, 50, 0.9);
+        color: var(--color-primary-container);
+        font-size: 12px;
+        line-height: 16px;
+        font-weight: 600;
+        padding: 4px 16px;
+        border-radius: 9999px;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+      }
+
+      .golden-info {
+        display: flex;
+        flex-direction: column;
+        gap: 24px;
+        flex: 1;
+        z-index: 10;
+      }
+
+      .golden-tags {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: space-between;
+        gap: 16px;
+      }
+
+      .tag-primary {
+        padding: 4px 16px;
+        border-radius: 9999px;
+        background-color: var(--color-primary-container);
+        color: var(--color-on-primary-container);
+        font-size: 12px;
+        line-height: 16px;
+        font-weight: 700;
+        letter-spacing: 0.025em;
+        text-transform: uppercase;
+      }
+
+      .dept-label {
+        font-size: 14px;
+        line-height: 20px;
+        color: var(--color-tertiary);
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+
+      .winner-title-group {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+      }
+
+      .winner-name {
+        margin: 0;
+        font-size: 32px;
+        line-height: 40px;
+        letter-spacing: -0.01em;
+        font-weight: 700;
+        color: var(--color-on-surface);
+      }
+
+      .winner-role {
+        margin: 0;
+        font-size: 18px;
+        line-height: 28px;
+        color: var(--color-primary);
+        font-weight: 600;
+      }
+
+      .winner-quote {
+        margin: 0;
+        font-size: 16px;
+        line-height: 24px;
+        color: var(--color-secondary);
+      }
+
+      .golden-stats {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 32px;
+        padding-top: 8px;
+        color: var(--color-on-surface);
+      }
+
+      .stat-item {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        font-size: 14px;
+        line-height: 20px;
+      }
+
+      .text-gold {
+        color: var(--color-primary-fixed-dim);
+      }
+
+      .winners-grid {
+        display: grid;
+        /*Permite el crecimiento del grid sin media querys, tamaño minimo == 360px*/
+        grid-template-columns: repeat(auto-fit, minmax(22.5rem, 1fr));
+        gap: 24px;
+      }
+
+      /* @media (min-width: 640px) {
+        .winners-grid {
+          grid-template-columns: repeat(2, 1fr);
+        }
+      }
+
+      @media (min-width: 1024px) {
+        .winners-grid {
+          grid-template-columns: repeat(autofi);
+        }
+      } */
+
+      .category-card {
+        display: flex;
+        flex-direction: column;
+        /* max-width: 26.88rem; */
+        background-color: var(--color-surface-container-lowest);
+        border-radius: 12px;
+        border: 1px solid rgba(225, 227, 228, 0.199);
+        overflow: hidden;
+        box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+        transition: all 0.2s ease;
+        padding: 15px;
+        gap: 24px;
+        box-sizing: border-box;
+      }
+
+      .category-card:hover {
+        box-shadow: 0px 0px 13px 5px rgba(0, 0, 0, 0.1);
+        border-color: rgba(114, 92, 0, 0.5);
+      }
+      .category-card:hover .card-img {
+        transform: scale(1.05);
+      }
+
+      .card-img-container {
+        position: relative;
+        width: 100%;
+        height: 192px;
+        border-radius: 8px;
+        overflow: hidden;
+        background-color: var(--color-surface-container);
+      }
+
+      .card-img {
+        width: 100%;
+        height: 100%;
+        object-fit: fill;
+        transition: all 0.2s ease;
+      }
+
+      .card-body {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+        flex: 1;
+      }
+
+      .card-winner-name {
+        margin: 0;
+        font-size: 18px;
+        line-height: 28px;
+        font-weight: 700;
+        color: var(--color-on-surface);
+      }
+
+      .card-winner-role {
+        font-size: 14px;
+        line-height: 20px;
+        color: var(--color-primary);
+        font-weight: 600;
+      }
+
+      .card-desc {
+        margin: 8px 0 0 0;
+        font-size: 14px;
+        line-height: 20px;
+        color: var(--color-secondary);
+        display: -webkit-box;
+        -webkit-line-clamp: 10;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+      }
+
+      .card-footer {
+        padding-top: 16px;
+        border-top: 1px solid rgba(225, 227, 228, 0.3);
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        color: var(--color-tertiary);
+        font-size: 14px;
+        line-height: 20px;
+      }
+
+      .footer-dept {
+        display: flex;
+        align-items: center;
+        gap: 4px;
+      }
+
+      .icon-small {
+        font-size: 16px !important;
+      }
+      .icon-gold {
+        color: var(--color-primary);
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Tarjetas de Ganadores -->
+    <section class="winners-section">
+      <div class="winners-header">
+        <div class="header-titles">
+          <!-- ================ Letras pequeñas sobre el titulo principal ================ -->
+          <span class="badge-label">Reconocimientos de Oro</span>
+
+          <!-- ================ TITULO PRINCIPAL ================ -->
+          <h2 class="section-title">
+            Premios
+            <span class="title-highlight">
+              WOW!
+              <span class="title-underline"></span>
+            </span>
+          </h2>
+        </div>
+        <div class="header-status">
+          <!-- ================ Anuncio de último periodo ================ -->
+          <span class="status-badge">
+            <span class="status-dot"></span>
+            Último Periodo: Q3 2025
+          </span>
+        </div>
+      </div>
+
+      <div class="winners-grid">
+        <!-- Tarjeta 1 -->
+        <div class="category-card">
+          <div class="card-img-container">
+            <!-- ================ IMAGEN editar la ruta dentro de las comillas de src="" ================ -->
+            <img
+              class="card-img"
+              src="https://i.ibb.co/RkWch8XS/11.jpg"
+              alt="Araisy Lopez"
+            />
+          </div>
+          <div class="card-body">
+            <!-- ================ Nombre del colaborador ================ -->
+            <h4 class="card-winner-name">Araisy Lopez</h4>
+
+            <!-- ================ Cargo del colaborador ================ -->
+            <span class="card-winner-role"
+              >Analista Sr. de QA de marketing</span
+            >
+
+            <!-- ================ Descripción ================ -->
+            <p class="card-desc">
+              Por su crecimiento, madurez profesional y su ejemplo inspirador.
+              Su método analítico, claridad en las comunicaciones y trato
+              respetuoso fortalecen cada interacción, dentro del equipo y con
+              otros departamentos. Guiar a quienes se incorporan, ayudarles a
+              entender la dinámica y alinear esfuerzos con los objetivos del
+              departamento. ¡Felicidades!
+            </p>
+          </div>
+          <div class="card-footer">
+            <span class="footer-dept">
+              <!-- ================ Icono ================ -->
+              <span class="material-symbols-outlined icon-small"
+                >document_search</span
+              >
+
+              <!-- ================ Nombre del Departamento ================ -->
+              Cumplimiento &amp; Monitoreo
+            </span>
+
+            <!-- ================ Icono de trofeo ================ -->
+            <span class="material-symbols-outlined icon-gold"
+              >emoji_events</span
+            >
+          </div>
+        </div>
+
+        <!-- Tarjeta 2 -->
+        <div class="category-card">
+          <div class="card-img-container">
+            <img
+              class="card-img"
+              src="https://i.ibb.co/HfFFm0qn/6.jpg"
+              alt="Arianna Pietrantuano"
+            />
+          </div>
+          <div class="card-body">
+            <h4 class="card-winner-name">Arianna Pietrantuano</h4>
+            <span class="card-winner-role">Analista de Datos</span>
+            <p class="card-desc">
+              Por su incansable esfuerzo y calidad. Su capacidad para gestionar
+              3 áreas con excelencia, sumada a su apoyo transversal, refleja un
+              compromiso y pasión únicos. Gracias por tu transparencia,
+              integridad y por inspirarnos a mejorar cada día. ¡Felicidades por
+              tu gran evolución profesional!
+            </p>
+          </div>
+          <div class="card-footer">
+            <span class="footer-dept">
+              <span class="material-symbols-outlined icon-small"
+                >bar_chart</span
+              >
+              Business Intelligence
+            </span>
+            <span class="material-symbols-outlined icon-gold"
+              >emoji_events</span
+            >
+          </div>
+        </div>
+
+        <!-- Tarjeta 3 -->
+        <div class="category-card">
+          <div class="card-img-container">
+            <img
+              class="card-img"
+              src="https://i.ibb.co/sdWmGyrP/17.jpg"
+              alt="Jonathan San Juan"
+            />
+          </div>
+          <div class="card-body">
+            <h4 class="card-winner-name">Jonathan San Juan</h4>
+            <span class="card-winner-role">Operador de CECOM</span>
+            <p class="card-desc">
+              En CECOM se reconoce a Jonathan San Juan por su compromiso,
+              lealtad y por su aporte en la puntualidad del equipo. Eres una
+              gran inspiración para seguir adelante ¡Felicidades!
+            </p>
+          </div>
+          <div class="card-footer">
+            <span class="footer-dept">
+              <span class="material-symbols-outlined icon-small">videocam</span>
+              Protocolo y CECOM
+            </span>
+            <span class="material-symbols-outlined icon-gold"
+              >emoji_events</span
+            >
+          </div>
+        </div>
+
+        <!-- Tarjeta 4 -->
+        <div class="category-card">
+          <div class="card-img-container">
+            <img
+              class="card-img"
+              src="https://i.ibb.co/YFftbD8G/16.jpg"
+              alt="Daryelin Durand"
+            />
+          </div>
+          <div class="card-body">
+            <h4 class="card-winner-name">Daryelin Durand</h4>
+            <span class="card-winner-role">Supervisora de Pagos</span>
+            <p class="card-desc">
+              por su gran gestión y liderazgo excepcional; no solo cumplió con
+              sus responsabilidades, sino que elevó el estándar de lo que
+              significa ser un líder y un colaborador en nuestra organización.
+              Su impacto profundo en la eficiencia operativa, la moral del
+              equipo y el desarrollo de talento la convierte en la merecedora
+              indiscutible de este prestigioso reconocimiento.
+            </p>
+          </div>
+          <div class="card-footer">
+            <span class="footer-dept">
+              <span class="material-symbols-outlined icon-small"
+                >support_agent</span
+              >
+              Customer Experience
+            </span>
+            <span class="material-symbols-outlined icon-gold"
+              >emoji_events</span
+            >
+          </div>
+        </div>
+
+        <!-- Tarjeta 5 -->
+        <div class="category-card">
+          <div class="card-img-container">
+            <img
+              class="card-img"
+              src="https://i.ibb.co/YT3SxFQG/15.jpg"
+              alt="Kleverson Ramos"
+            />
+          </div>
+          <div class="card-body">
+            <h4 class="card-winner-name">Kleverson Ramos</h4>
+            <span class="card-winner-role"
+              >Supervisor de Atención al Cliente</span
+            >
+            <p class="card-desc">
+              supervisor del turno de la madrugada. Con una gran proyección al
+              cumplimiento, ejemplo de proactividad constante y orientación al
+              logro, innovador diseñando herramientas para facilitar la gestión
+              de todo el equipo, siempre creando propuestas en cualquier ámbito,
+              buscando la mejora del servicio, siempre trabajando con el grupo
+              con aportes que generaron un impacto positivo en las campañas.
+              ¡Felicidades!
+            </p>
+          </div>
+          <div class="card-footer">
+            <span class="footer-dept">
+              <span class="material-symbols-outlined icon-small"
+                >support_agent</span
+              >
+              Customer Experience
+            </span>
+            <span class="material-symbols-outlined icon-gold"
+              >emoji_events</span
+            >
+          </div>
+        </div>
+
+        <!-- Tarjeta 6 -->
+        <div class="category-card">
+          <div class="card-img-container">
+            <img
+              class="card-img"
+              src="https://i.ibb.co/gZzWSzSD/14.jpg"
+              alt="Eliezer Mujica"
+            />
+          </div>
+          <div class="card-body">
+            <h4 class="card-winner-name">Eliezer Mujica</h4>
+            <span class="card-winner-role">Diseñador</span>
+            <p class="card-desc">
+              Siempre ha demostrado una empatía genuina, compartiendo
+              generosamente su sabiduría e impartiendo conocimientos que nos
+              elevan a todos. Con su actitud ejemplar y su disposición a aceptar
+              cualquier reto, nos enseña que el camino hacia el éxito se recorre
+              con pasión. ¡Gracias, Eliezer por ser inspiración y un compañero
+              excepcional.
+            </p>
+          </div>
+          <div class="card-footer">
+            <span class="footer-dept">
+              <span class="material-symbols-outlined icon-small">palette</span>
+              Diseño
+            </span>
+            <span class="material-symbols-outlined icon-gold"
+              >emoji_events</span
+            >
+          </div>
+        </div>
+
+        <!-- Tarjeta 7 -->
+        <div class="category-card">
+          <div class="card-img-container">
+            <img
+              class="card-img"
+              src="https://i.ibb.co/GSgmd95/13.jpg"
+              alt="Wuilber Rangel"
+            />
+          </div>
+          <div class="card-body">
+            <h4 class="card-winner-name">Wuilber Rangel</h4>
+            <span class="card-winner-role"
+              >Analista de Nómina y Relaciones Laborales</span
+            >
+            <p class="card-desc">
+              Te extendemos una sincera y efusiva felicitación por el
+              extraordinario éxito alcanzado. Gracias a tu trabajo, hemos dado
+              un paso gigantesco hacia la optimización de nuestros procesos del
+              área, garantizando mayor transparencia, precisión y eficiencia en
+              la gestión diaria del personal. Excelente trabajo y muchas gracias
+              por tu invaluable contribución. ¡Felicidades!
+            </p>
+          </div>
+          <div class="card-footer">
+            <span class="footer-dept">
+              <span class="material-symbols-outlined icon-small">groups_3</span>
+              Talento Humano
+            </span>
+            <span class="material-symbols-outlined icon-gold"
+              >emoji_events</span
+            >
+          </div>
+        </div>
+      </div>
+    </section>
+  </body>
+</html>

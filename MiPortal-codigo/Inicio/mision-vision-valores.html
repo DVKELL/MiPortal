@@ -1,0 +1,183 @@
+<!--
+Guía de edición rápida para el equipo
+
+Textos de Misión, Visión y Valores:
+  Modifica directamente el contenido dentro de las etiquetas <p class="mvv-desc">...</p> en cada una de las tres columnas (.mvv-col).
+
+Iconos Visuales:
+
+  Para cambiar los iconos representativos de cada sección, actualiza el texto dentro del <span class="material-symbols-outlined">...</span>:
+
+    Misión: flag (Bandera)
+    Visión: visibility (Ojo/Visión)
+    Valores: diamond (Diamante)
+
+  Puedes buscar más iconos en Google Material Symbols.
+
+Fondo y Colores (CSS):
+  El fondo oscuro principal utiliza el color #191c1d (definido en .mvv-banner).
+  El color dorado distintivo para títulos e iconos es #ffe07c y #725c00.
+-->
+<html>
+  <head>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
+      rel="stylesheet"
+    />
+
+    <style>
+      :root {
+        --font-family: "Inter", sans-serif;
+      }
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+        font-family: var(--font-family), sans-serif;
+      }
+      body {
+        background: transparent;
+      }
+
+      /* Contenedor Principal del Banner */
+      .mvv-banner {
+        background-color: #191c1d;
+        color: #ffffff;
+        padding: 40px;
+        border-radius: 12px;
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 40px;
+        text-align: center;
+        position: relative;
+        overflow: hidden;
+      }
+
+      /* Patrón Decorativo de Fondo (Puntos Dorados) */
+      .mvv-bg-pattern {
+        position: absolute;
+        inset: 0;
+        opacity: 0.1;
+        pointer-events: none;
+        background-image: radial-gradient(
+          circle at center,
+          #ffe07c 1px,
+          transparent 1px
+        );
+        background-size: 24px 24px;
+      }
+
+      /* Columnas Individuales */
+      .mvv-col {
+        position: relative;
+        z-index: 10;
+        padding: 0 16px;
+        border-right: 1px solid rgba(225, 227, 228, 0.3);
+      }
+      .mvv-col:last-child {
+        border-right: none;
+      }
+
+      /* Contenedores de Iconos Circulares */
+      .icon-wrapper {
+        width: 48px;
+        height: 48px;
+        margin: 0 auto 16px auto;
+        background-color: #725c00;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .icon-wrapper .material-symbols-outlined {
+        color: #ffe07c;
+      }
+
+      /* Textos y Tipografía */
+      .mvv-title {
+        font-size: 24px;
+        font-weight: 600;
+        color: #ffe07c;
+        margin-bottom: 8px;
+      }
+      .mvv-desc {
+        font-size: 14px;
+        color: #d9dadb;
+        line-height: 1.5;
+      }
+
+      /* Diseño Responsivo para Pantallas Pequeñas (Móviles / Tablets) */
+      @media (max-width: 768px) {
+        .mvv-banner {
+          grid-template-columns: 1fr;
+          gap: 32px;
+          padding: 24px;
+        }
+        .mvv-col {
+          border-right: none;
+          border-bottom: 1px solid rgba(225, 227, 228, 0.3);
+          padding-bottom: 24px;
+        }
+        .mvv-col:last-child {
+          border-bottom: none;
+          padding-bottom: 0;
+        }
+      }
+    </style>
+  </head>
+
+  <!-- ================= BANNER MISIÓN, VISIÓN Y VALORES ================= -->
+  <section class="mvv-banner">
+    <!-- Capa con Patrón Visual -->
+    <div class="mvv-bg-pattern"></div>
+
+    <!-- Columna 1: Misión -->
+    <div class="mvv-col">
+      <div class="icon-wrapper">
+        <!-- Icono ⬇ -->
+        <span class="material-symbols-outlined">flag</span>
+      </div>
+      <!-- Titulo ⬇ -->
+      <h3 class="mvv-title">Misión</h3>
+      <!-- Descripción ⬇ -->
+      <p class="mvv-desc">
+        Facilitar experiencias excepcionales a través de la gestión eficiente de
+        las operaciones, comprometidos con la calidad y la innovación en todos
+        nuestros procesos.
+      </p>
+    </div>
+
+    <!-- Columna 2: Visión -->
+    <div class="mvv-col">
+      <div class="icon-wrapper">
+        <!-- Icono ⬇ -->
+        <span class="material-symbols-outlined">visibility</span>
+      </div>
+      <!-- Titulo ⬇ -->
+      <h3 class="mvv-title">Visión</h3>
+      <!-- Descripción ⬇ -->
+      <p class="mvv-desc">
+        Ser una organización líder en la gestión de empresas del sector de
+        entretenimiento y ocio, reconocida por nuestra capacidad de ofrecer
+        soluciones innovadoras y un servicio excepcional a nuestros clientes
+      </p>
+    </div>
+
+    <!-- Columna 3: Valores -->
+    <div class="mvv-col">
+      <div class="icon-wrapper">
+        <!-- Icono ⬇ -->
+        <span class="material-symbols-outlined">diamond</span>
+      </div>
+      <!-- Titulo ⬇ -->
+      <h3 class="mvv-title">Valores</h3>
+      <!-- Descripción ⬇ -->
+      <p class="mvv-desc">Compromiso, Pasión, Excelencia y Transparencia</p>
+    </div>
+  </section>
+</html>

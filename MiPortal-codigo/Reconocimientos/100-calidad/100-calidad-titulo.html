@@ -1,0 +1,212 @@
+<!-- 
+  Guía Completa de Administración y Edición
+  1. Cómo modificar el titulo principal:
+    Edita el texto que se encuentra dentro de la etiqueta <h1 class="main-headline">...</h1> 
+    
+  2. Cómo editar el parrafo:
+    Edita el texto que se encuentra dentro de la etiqueta <p class="hero-description">...</p> 
+-->
+<html>
+  <head>
+    <!-- Carga de Fuentes de Google e Iconos de Material -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0..1,0"
+    />
+
+    <!-- Estilos CSS Nativos -->
+    <style>
+      :root {
+        --primary-container: #ffd200;
+        --on-primary-container: #705b00;
+        --primary: #725c00;
+        --on-surface: #191c1d;
+        --secondary: #5d5e61;
+        --background: #f8f9fa;
+        --surface-container-highest: #e1e3e4;
+        --font-family-base: "Inter", sans-serif;
+      }
+
+      body {
+        margin: 0;
+      }
+
+      /* Reinicio básico para el contenedor insertado */
+      .hero-embed-wrapper {
+        font-family: var(--font-family-base);
+        /* background-color: var(--background); */
+        color: var(--on-surface);
+        padding: 2.5rem 1.5rem;
+        position: relative;
+        overflow: hidden;
+        width: 100%;
+        box-sizing: border-box;
+      }
+
+      /* Resplandores ambientales decorativos de fondo */
+      .ambient-glow-1 {
+        position: absolute;
+        top: -6rem;
+        right: 25%;
+        width: 24rem;
+        height: 24rem;
+        background-color: rgba(255, 210, 0, 0.2);
+        border-radius: 9999px;
+        filter: blur(48px);
+        pointer-events: none;
+        z-index: 0;
+      }
+
+      .ambient-glow-2 {
+        position: absolute;
+        top: 50%;
+        left: -5rem;
+        width: 20rem;
+        height: 20rem;
+        background-color: rgba(225, 227, 228, 0.6);
+        border-radius: 9999px;
+        filter: blur(48px);
+        pointer-events: none;
+        z-index: 0;
+      }
+
+      /* Contenedor Limítrofe Principal */
+      .hero-container {
+        max-width: 1440px;
+        margin: 0 auto;
+        position: relative;
+        z-index: 1;
+        display: flex;
+        flex-direction: column;
+        gap: 1.5rem;
+      }
+
+      /* Insignia de Estado (Pill Badge) */
+      .badge-container {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+      }
+
+      .pill-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        padding: 0.25rem 1rem;
+        border-radius: 9999px;
+        background-color: var(--primary-container);
+        color: var(--on-primary-container);
+        font-size: 0.75rem;
+        font-weight: 600;
+        letter-spacing: 0.05em;
+        text-transform: uppercase;
+        box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+      }
+
+      .pill-badge .material-symbols-outlined {
+        font-size: 16px;
+        font-variation-settings: "FILL" 1;
+      }
+
+      /* Distribución del Encabezado Principal */
+      .headline-layout {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        gap: 1.5rem;
+      }
+
+      @media (min-width: 1024px) {
+        .headline-layout {
+          flex-direction: row;
+          align-items: flex-end;
+        }
+      }
+
+      .headline-content {
+        max-width: 48rem;
+      }
+
+      /* Título Principal */
+      .main-headline {
+        font-size: 2rem;
+        line-height: 2.25rem;
+        font-weight: 700;
+        color: var(--on-surface);
+        letter-spacing: -0.02em;
+        margin: 0;
+      }
+
+      @media (min-width: 768px) {
+        .main-headline {
+          font-size: 3rem;
+          line-height: 3.5rem;
+        }
+      }
+
+      /* Subrayado con Acento Dorado */
+      .highlight-accent {
+        color: var(--primary);
+        text-decoration: underline;
+        text-decoration-color: var(--primary-container);
+        text-decoration-thickness: 4px;
+        text-underline-offset: 8px;
+      }
+
+      /* Descripción */
+      .hero-description {
+        font-size: 1.125rem;
+        line-height: 1.75rem;
+        color: var(--secondary);
+        margin-top: 1rem;
+        margin-bottom: 0;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="hero-embed-wrapper">
+      <!-- Resplandor ambiental decorativo -->
+      <div class="ambient-glow-1"></div>
+      <div class="ambient-glow-2"></div>
+
+      <!-- Sección 1: Encabezado Principal y Barómetro de KPI Corporativos -->
+      <header class="hero-container">
+        <!-- Insignia de Estado Superior -->
+        <div class="badge-container">
+          <span class="pill-badge">
+            <!-- =========================== ICONO =========================== -->
+            <span class="material-symbols-outlined">verified</span>
+
+            <!-- =========================== TEXTO =========================== -->
+            Programa de Excelencia Operativa · Auditoría Continua
+          </span>
+        </div>
+
+        <!-- Título Principal y Descripción -->
+        <div class="headline-layout">
+          <div class="headline-content">
+            <!-- =========================== TITULO =========================== -->
+            <h1 class="main-headline">
+              Reconocimiento
+              <span class="highlight-accent">100% Calidad!</span>
+            </h1>
+            <!-- =========================== DESCRIPCIÓN =========================== -->
+            <p class="hero-description">
+              Reconocemos la rigurosidad, el apego estricto a las normas de
+              auditoría y la perfección operativa de nuestros colaboradores en
+              turnos de alta exigencia operacional.
+            </p>
+          </div>
+        </div>
+      </header>
+    </div>
+  </body>
+</html>

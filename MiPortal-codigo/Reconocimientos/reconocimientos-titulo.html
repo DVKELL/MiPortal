@@ -1,0 +1,286 @@
+<!-- 
+  Guía Completa de Administración y Edición
+  1. Cómo modificar el titulo:
+    Edita el texto que se encuentra dentro de la etiqueta <h1 class="hero-title">...</h1> 
+    
+  2. Cómo editar el parrafo final
+    Edita el texto que se encuentra dentro de la etiqueta <p class="hero-description">...</p> 
+
+-->
+
+<html>
+  <head>
+    <!-- Carga de Fuentes de Google y Símbolos de Material -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0"
+      rel="stylesheet"
+    />
+
+    <!-- Estilos CSS Nativos -->
+    <style>
+      :root {
+        --bg-background: #f8f9fa;
+        --color-primary: #725c00;
+        --color-primary-container: #ffd200;
+        --color-primary-fixed-dim: #ecc200;
+        --color-on-surface: #191c1d;
+        --color-on-surface-variant: #4d4632;
+        --color-surface-container: #edeeef;
+        --color-surface-container-high: #e7e8e9;
+        --color-surface-container-highest: #e1e3e4;
+        --color-surface-container-lowest: #ffffff;
+        --font-family: "Inter", sans-serif;
+      }
+
+      body {
+        margin: 0;
+        padding: 0;
+        font-family: var(--font-family);
+        background-color: transparent;
+        -webkit-font-smoothing: antialiased;
+      }
+
+      /* Contenedor Principal con Efectos de Iluminación */
+      .hero-wrapper {
+        position: relative;
+        width: 100%;
+        overflow: hidden;
+        box-sizing: border-box;
+      }
+
+      .glow-top {
+        pointer-events: none;
+        position: absolute;
+        top: -160px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 980px;
+        height: 360px;
+        background: linear-gradient(
+          180deg,
+          rgba(255, 210, 0, 0.2) 0%,
+          rgba(231, 232, 233, 0.4) 50%,
+          transparent 100%
+        );
+        filter: blur(48px);
+        border-radius: 9999px;
+      }
+
+      .glow-left {
+        pointer-events: none;
+        position: absolute;
+        top: 33%;
+        left: 2.5rem;
+        width: 288px;
+        height: 288px;
+        background-color: rgba(255, 224, 124, 0.1);
+        filter: blur(32px);
+        border-radius: 9999px;
+      }
+
+      .glow-right {
+        pointer-events: none;
+        position: absolute;
+        top: 50%;
+        right: 3rem;
+        width: 320px;
+        height: 320px;
+        background-color: rgba(225, 227, 228, 0.6);
+        filter: blur(48px);
+        border-radius: 9999px;
+      }
+
+      .hero-container {
+        max-width: 1440px;
+        margin: 0 auto;
+        padding: 15px 16px;
+        position: relative;
+        z-index: 10;
+        box-sizing: border-box;
+      }
+
+      @media (min-width: 768px) {
+        .hero-container {
+          padding: 15px 18px;
+        }
+      }
+
+      /* Sección de Encabezado */
+      .hero-header {
+        max-width: 56rem;
+        margin: 0 auto;
+        text-align: center;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+
+      /* Insignia Superior */
+      .eyebrow-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 4px 16px;
+        background-color: var(--color-surface-container-lowest);
+        border-radius: 9999px;
+        margin-bottom: 24px;
+        box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+        transition: background-color 0.3s ease;
+        text-decoration: none;
+      }
+
+      .eyebrow-badge:hover {
+        background-color: var(--color-surface-container);
+      }
+
+      .ping-container {
+        display: flex;
+        height: 8px;
+        width: 8px;
+        position: relative;
+      }
+
+      .ping-circle {
+        animation: ping 1s cubic-bezier(0, 0, 0.2, 1) infinite;
+        position: absolute;
+        display: inline-flex;
+        height: 100%;
+        width: 100%;
+        border-radius: 9999px;
+        background-color: var(--color-primary-fixed-dim);
+        opacity: 0.75;
+      }
+
+      .base-circle {
+        position: relative;
+        display: inline-flex;
+        border-radius: 9999px;
+        height: 8px;
+        width: 8px;
+        background-color: var(--color-primary);
+      }
+
+      @keyframes ping {
+        75%,
+        100% {
+          transform: scale(2);
+          opacity: 0;
+        }
+      }
+
+      .badge-text {
+        font-size: 12px;
+        line-height: 16px;
+        letter-spacing: 0.05em;
+        font-weight: 600;
+        color: var(--color-on-surface-variant);
+        text-transform: uppercase;
+      }
+
+      .badge-icon {
+        font-size: 16px !important;
+        color: var(--color-primary);
+        transition: transform 0.2s ease;
+      }
+
+      .eyebrow-badge:hover .badge-icon {
+        transform: translateX(2px);
+      }
+
+      /* Título Principal */
+      .hero-title {
+        margin: 0 0 16px 0;
+        font-size: 32px;
+        line-height: 40px;
+        letter-spacing: -0.01em;
+        font-weight: 700;
+        color: var(--color-on-surface);
+      }
+
+      @media (min-width: 768px) {
+        .hero-title {
+          font-size: 48px;
+          line-height: 56px;
+          letter-spacing: -0.02em;
+        }
+      }
+
+      .title-highlight {
+        position: relative;
+        display: inline-block;
+        color: var(--color-on-surface);
+      }
+
+      .title-underline {
+        position: absolute;
+        left: 0;
+        bottom: -6px;
+        width: 100%;
+        height: 4px;
+        background-color: var(--color-primary-container);
+        border-radius: 999px;
+      }
+
+      /* Subtítulo / Descripción */
+      .hero-description {
+        margin: 0 auto;
+        font-size: 18px;
+        line-height: 28px;
+        color: var(--color-on-surface-variant);
+        max-width: 42rem;
+      }
+    </style>
+  </head>
+
+  <body>
+    <!-- Estructura HTML de la Introducción -->
+    <div class="hero-wrapper">
+      <!-- Destellos y Efectos Ambientales de Fondo -->
+      <div class="glow-top"></div>
+      <div class="glow-left"></div>
+      <div class="glow-right"></div>
+
+      <div class="hero-container">
+        <!-- Encabezado Principal -->
+        <section class="hero-header">
+          <!-- Insignia Superior (Eyebrow) -->
+          <div class="eyebrow-badge">
+            <span class="ping-container">
+              <span class="ping-circle"></span>
+              <span class="base-circle"></span>
+            </span>
+            <span class="badge-text"
+              >Programa de Reconocimiento &amp; Cultura</span
+            >
+            <!-- ICONO -->
+            <span class="material-symbols-outlined badge-icon"
+              >workspace_premium</span
+            >
+          </div>
+
+          <!-- Título de Alto Impacto -->
+          <h1 class="hero-title">
+            Reconocimiento y Excelencia
+            <span class="title-highlight">
+              WOW!
+              <span class="title-underline"></span>
+            </span>
+          </h1>
+
+          <!-- Descripción del Programa -->
+          <p class="hero-description">
+            Descubre los programas de incentivos, celebra las historias
+            inspiradoras de nuestro equipo y conoce los estándares corporativos
+            que nos impulsan al 100% de calidad.
+          </p>
+        </section>
+      </div>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,626 @@
+<html>
+  <!-- 
+  Guía Completa de Administración y Edición
+  1. Cómo agregar un nuevo formulario a una sección existente
+    Ubica el contenedor <ul class="forms-list"> del departamento deseado y copia toda la información que se encuentre dentro de las etiquetas <li>...</li>.
+
+  2. Cómo eliminar un formulario existente
+    Busca el nombre del departamento que estará encerrado entre las etiquetas <span class="form-name">...</span>
+    Elimina toda la etiqueta <li> que encierren al departamento
+      
+  3. Editar el nombre o link de un formulario existente
+    Titulo: Edita el texto dentro de la etiqueta <span class="form-name">...</span>
+    Icono: Edita el texto dentro de la etiqueta <span class="material-symbols-outlined form-icon">...</span>
+    Link: Ubica la etiqueta con la clase form-item-link y edita el texto dentro del atributo href="" colocando el link dentro de las comillas
+    
+  4. Cómo crear un Área/Departamento completamente nuevo
+    Ubica el contenedor general <div class="department-grid">.
+    Pega el siguiente bloque <div class="dept-card"> justo antes del cierre de .department-grid:
+      
+  <div class="dept-card">
+    <div class="dept-header">
+      <div class="dept-icon-wrapper">
+        <span class="material-symbols-outlined">campaign</span>
+      </div>
+      <h2 class="dept-title">Nombre del Departamento</h2>
+    </div>
+    <ul class="forms-list">
+      <li>
+        <a href="URL_AQUI" class="form-item-link">
+          <div class="form-item-left">
+            <span class="material-symbols-outlined form-icon">assignment</span>
+            <div class="form-info">
+              <span class="form-name">Primer Formulario</span>
+            </div>
+          </div>
+          <span class="material-symbols-outlined form-arrow">chevron_right</span>
+        </a>
+      </li>
+    </ul>
+</div>
+
+-->
+
+  <head>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
+      rel="stylesheet"
+    />
+
+    <style>
+      :root {
+        --font-family: "Inter", sans-serif;
+      }
+
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+        font-family: var(--font-family), sans-serif;
+      }
+      body {
+        background-color: transparent;
+        padding: 16px;
+      }
+
+      /* Encabezado de la Sección */
+      .directory-header {
+        margin-bottom: 24px;
+      }
+      .directory-title {
+        font-size: 28px;
+        font-weight: 700;
+        color: #191c1d;
+        margin-bottom: 8px;
+      }
+      .directory-desc {
+        font-size: 14px;
+        color: #4d4632;
+        line-height: 1.5;
+      }
+
+      /* Grid Principal de Tarjetas */
+      .department-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 24px;
+      }
+
+      /* Tarjeta de Departamento */
+      .dept-card {
+        background-color: #ffffff;
+        border-radius: 12px;
+        border: 1px solid #e1e3e4;
+        box-shadow: 0 4px 12px rgba(26, 28, 30, 0.04);
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+      }
+
+      /* Encabezado de la Tarjeta */
+      .dept-header {
+        padding: 20px 24px;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        background-color: #ffffff;
+        border-bottom: 1px solid #e1e3e4;
+      }
+      .dept-icon-wrapper {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        background-color: #fff8e1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #725c00;
+        flex-shrink: 0;
+      }
+      .dept-title {
+        font-size: 20px;
+        font-weight: 700;
+        color: #191c1d;
+      }
+
+      /* Lista de Formularios */
+      .forms-list {
+        list-style: none;
+        display: flex;
+        flex-direction: column;
+        background-color: #f8f9fa;
+        height: 100%;
+      }
+      .form-item-link {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 16px 24px;
+        border-bottom: 1px solid #e1e3e4;
+        text-decoration: none;
+        transition: background-color 0.2s ease;
+      }
+      .form-item-link:last-child {
+        border-bottom: none;
+      }
+      .form-item-link:hover {
+        background-color: #f0f1f2;
+      }
+      .form-item-left {
+        display: flex;
+        align-items: center;
+        gap: 16px;
+      }
+      .form-icon {
+        color: #4d4632;
+        font-size: 20px;
+        transition: color 0.2s ease;
+      }
+      .form-item-link:hover .form-icon {
+        color: #725c00;
+      }
+      .form-info {
+        display: flex;
+        flex-direction: column;
+      }
+      .form-name {
+        font-size: 14px;
+        font-weight: 600;
+        color: #191c1d;
+      }
+      .form-arrow {
+        color: #9d9e00;
+        font-size: 18px;
+        opacity: 0.6;
+        transition:
+          transform 0.2s ease,
+          opacity 0.2s ease;
+      }
+      .form-item-link:hover .form-arrow {
+        opacity: 1;
+        transform: translateX(3px);
+      }
+
+      /* Responsive para pantallas móviles */
+      @media (max-width: 768px) {
+        .department-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
+  </head>
+
+  <div class="directory-container">
+    <!-- Encabezado de Sección -->
+    <!--
+  <div class="directory-header">
+    <h1 class="directory-title">Directorio de Formularios</h1>
+    <p class="directory-desc">
+      Acceda rápidamente a los documentos y solicitudes oficiales clasificados
+      por departamento.<br />
+      Seleccione una categoría para iniciar su trámite.
+    </p>
+  </div>
+-->
+
+    <!-- Grilla de Departamentos -->
+    <div class="department-grid">
+      <!-- ========================================= Tarjeta: Talento Humano =========================================  -->
+      <div class="dept-card">
+        <div class="dept-header">
+          <div class="dept-icon-wrapper">
+            <!-- =========================== ICONO =========================== -->
+            <span class="material-symbols-outlined">group</span>
+          </div>
+          <!-- =========================== TITULO DE LA TARJETA =========================== -->
+          <h2 class="dept-title">Talento Humano</h2>
+        </div>
+        <ul class="forms-list">
+          <li>
+            <a
+              href="https://www.notion.so/mcgroupvenezuela/Solicitud-APS-1dea6bf84cf780829ddacfb677aace23?source=copy_link"
+              class="form-item-link"
+            >
+              <div class="form-item-left">
+                <!-- =========================== Icono del formulario =========================== -->
+                <span class="material-symbols-outlined form-icon"
+                  >health_cross</span
+                >
+                <div class="form-info">
+                  <!-- =========================== Nombre del formulario =========================== -->
+                  <span class="form-name">Solicitud APS</span>
+                </div>
+              </div>
+              <!-- =========================== Icono de flecha hacia la derecha > =========================== -->
+              <span class="material-symbols-outlined form-arrow"
+                >chevron_right</span
+              >
+            </a>
+          </li>
+          <li>
+            <a
+              href="https://www.notion.so/mcgroupvenezuela/Reporte-de-salidas-1c7a6bf84cf780c4a86afbcb25464dd3?source=copy_link"
+              class="form-item-link"
+            >
+              <div class="form-item-left">
+                <span class="material-symbols-outlined form-icon"
+                  >beach_access</span
+                >
+                <div class="form-info">
+                  <span class="form-name">Solicitud de Reporte de Salidas</span>
+                </div>
+              </div>
+              <span class="material-symbols-outlined form-arrow"
+                >chevron_right</span
+              >
+            </a>
+          </li>
+          <li>
+            <a
+              href="https://www.notion.so/mcgroupvenezuela/Formulario-de-Requisici-n-del-Personal-4b834d024be0486195c61ef9e451833a?source=copy_link"
+              class="form-item-link"
+            >
+              <div class="form-item-left">
+                <span class="material-symbols-outlined form-icon"
+                  >directions_walk</span
+                >
+                <div class="form-info">
+                  <span class="form-name"
+                    >Formulario de Requisición de Personal</span
+                  >
+                </div>
+              </div>
+              <span class="material-symbols-outlined form-arrow"
+                >chevron_right</span
+              >
+            </a>
+          </li>
+          <li>
+            <a
+              href="https://forms.gle/haK6qHfaWqVnF59ZA"
+              class="form-item-link"
+            >
+              <div class="form-item-left">
+                <span class="material-symbols-outlined form-icon"
+                  >two_wheeler</span
+                >
+                <div class="form-info">
+                  <span class="form-name">Registro de Motocicletas</span>
+                </div>
+              </div>
+              <span class="material-symbols-outlined form-arrow"
+                >chevron_right</span
+              >
+            </a>
+          </li>
+          <li>
+            <a
+              href="https://app.notion.com/p/mcgroupvenezuela/Formulario-Colaboradores-TH-1-36ea6bf84cf780f29b7cfc18b4db6556?source=copy_link"
+              class="form-item-link"
+            >
+              <div class="form-item-left">
+                <span class="material-symbols-outlined form-icon">badge</span>
+                <div class="form-info">
+                  <span class="form-name">Registro de Colaboradores</span>
+                </div>
+              </div>
+              <span class="material-symbols-outlined form-arrow"
+                >chevron_right</span
+              >
+            </a>
+          </li>
+          <li>
+            <a
+              href="https://script.google.com/a/macros/correomc.com/s/AKfycbza-Wa4AGxXAq5DImPIFABAT6Ce6tHibkolb4Hj1PqrYaF_WjiBJ3k_Zvp0BNQuZHZ2/exec"
+              class="form-item-link"
+            >
+              <div class="form-item-left">
+                <span class="material-symbols-outlined form-icon"
+                  >description</span
+                >
+                <div class="form-info">
+                  <span class="form-name"
+                    >Solicitud de Constancias/Referencias Comerciales</span
+                  >
+                </div>
+              </div>
+              <span class="material-symbols-outlined form-arrow"
+                >chevron_right</span
+              >
+            </a>
+          </li>
+        </ul>
+      </div>
+
+      <!-- ========================================= Tarjeta: Control y Procesos ========================================= -->
+      <div class="dept-card">
+        <div class="dept-header">
+          <div class="dept-icon-wrapper">
+            <span class="material-symbols-outlined"
+              >published_with_changes</span
+            >
+          </div>
+          <h2 class="dept-title">Control y Procesos</h2>
+        </div>
+        <ul class="forms-list">
+          <li>
+            <a
+              href="https://www.notion.so/mcgroupvenezuela/ac83671f461642dd9947553f304df05e?v=073e83bf79634c46bfb4cff9af713586&source=copy_link"
+              class="form-item-link"
+            >
+              <div class="form-item-left">
+                <span class="material-symbols-outlined form-icon">rule</span>
+                <div class="form-info">
+                  <span class="form-name"
+                    >Solicitudes a Control y Procesos</span
+                  >
+                </div>
+              </div>
+              <span class="material-symbols-outlined form-arrow"
+                >chevron_right</span
+              >
+            </a>
+          </li>
+          <li>
+            <a
+              href="https://www.notion.so/mcgroupvenezuela/Formulario-de-contenido-FAQs-1afa6bf84cf7802e9f7bfd31c6cc788b?source=copy_link"
+              class="form-item-link"
+            >
+              <div class="form-item-left">
+                <span class="material-symbols-outlined form-icon">quiz</span>
+                <div class="form-info">
+                  <span class="form-name"
+                    >Solicitud de nuevo contenido en el FAQ</span
+                  >
+                </div>
+              </div>
+              <span class="material-symbols-outlined form-arrow"
+                >chevron_right</span
+              >
+            </a>
+          </li>
+        </ul>
+      </div>
+
+      <!-- ========================================= Tarjeta: Marketing ========================================= -->
+      <div class="dept-card">
+        <div class="dept-header">
+          <div class="dept-icon-wrapper">
+            <span class="material-symbols-outlined">campaign</span>
+          </div>
+          <h2 class="dept-title">Marketing</h2>
+        </div>
+        <ul class="forms-list">
+          <li>
+            <a
+              href="https://www.notion.so/mcgroupvenezuela/Formulario-Solicitudes-a-Dise-o-6aa34e6b944748a8b5b66a00e46e38a8?source=copy_link"
+              class="form-item-link"
+            >
+              <div class="form-item-left">
+                <span class="material-symbols-outlined form-icon">palette</span>
+                <div class="form-info">
+                  <span class="form-name">Solicitudes a Diseño</span>
+                </div>
+              </div>
+              <span class="material-symbols-outlined form-arrow"
+                >chevron_right</span
+              >
+            </a>
+          </li>
+          <li>
+            <a href="#" class="form-item-link">
+              <div class="form-item-left">
+                <span class="material-symbols-outlined form-icon"
+                  >edit_note</span
+                >
+                <div class="form-info">
+                  <span class="form-name">Solicitudes a Copy</span>
+                </div>
+              </div>
+              <span class="material-symbols-outlined form-arrow"
+                >chevron_right</span
+              >
+            </a>
+          </li>
+          <li>
+            <a href="#" class="form-item-link">
+              <div class="form-item-left">
+                <span class="material-symbols-outlined form-icon"
+                  >newspaper</span
+                >
+                <div class="form-info">
+                  <span class="form-name">Solicitudes a Periodismo</span>
+                </div>
+              </div>
+              <span class="material-symbols-outlined form-arrow"
+                >chevron_right</span
+              >
+            </a>
+          </li>
+        </ul>
+      </div>
+
+      <!-- ========================================= Tarjeta: Administración y Finanzas ========================================= -->
+      <div class="dept-card">
+        <div class="dept-header">
+          <div class="dept-icon-wrapper">
+            <span class="material-symbols-outlined">account_balance</span>
+          </div>
+          <h2 class="dept-title">Administración y Finanzas</h2>
+        </div>
+        <ul class="forms-list">
+          <li>
+            <a
+              href="https://www.notion.so/mcgroupvenezuela/Solicitud-de-Vi-ticos-14b11ec308604600933de6fcf87692a6?source=copy_link"
+              class="form-item-link"
+            >
+              <div class="form-item-left">
+                <span class="material-symbols-outlined form-icon"
+                  >payments</span
+                >
+                <div class="form-info">
+                  <span class="form-name">Solicitud de Viáticos</span>
+                </div>
+              </div>
+              <span class="material-symbols-outlined form-arrow"
+                >chevron_right</span
+              >
+            </a>
+          </li>
+          <li>
+            <a href="#" class="form-item-link">
+              <div class="form-item-left">
+                <span class="material-symbols-outlined form-icon"
+                  >shopping_cart</span
+                >
+                <div class="form-info">
+                  <span class="form-name">Solicitud de Compras</span>
+                </div>
+              </div>
+              <span class="material-symbols-outlined form-arrow"
+                >chevron_right</span
+              >
+            </a>
+          </li>
+          <li>
+            <a
+              href="https://www.notion.so/mcgroupvenezuela/Solicitudes-para-Servicios-Generales-96fc711a43644621858342a2e5aa936c?source=copy_link"
+              class="form-item-link"
+            >
+              <div class="form-item-left">
+                <span class="material-symbols-outlined form-icon">build</span>
+                <div class="form-info">
+                  <span class="form-name"
+                    >Solicitudes a Servicios Generales</span
+                  >
+                </div>
+              </div>
+              <span class="material-symbols-outlined form-arrow"
+                >chevron_right</span
+              >
+            </a>
+          </li>
+          <li>
+            <a href="#" class="form-item-link">
+              <div class="form-item-left">
+                <span class="material-symbols-outlined form-icon"
+                  >local_taxi</span
+                >
+                <div class="form-info">
+                  <span class="form-name">Solicitud de Yummy Rides</span>
+                </div>
+              </div>
+              <span class="material-symbols-outlined form-arrow"
+                >chevron_right</span
+              >
+            </a>
+          </li>
+        </ul>
+      </div>
+
+      <!-- ========================================= Tarjeta: Tecnología ========================================= -->
+      <div class="dept-card">
+        <div class="dept-header">
+          <div class="dept-icon-wrapper">
+            <span class="material-symbols-outlined">computer</span>
+          </div>
+          <h2 class="dept-title">Tecnología</h2>
+        </div>
+        <ul class="forms-list">
+          <li>
+            <a
+              href="https://app.notion.com/p/mcgroupvenezuela/Formulario-de-Incidencias-y-Requerimientos-196a6bf84cf780dc9e00ef2382d7ed26?source=copy_link"
+              class="form-item-link"
+            >
+              <div class="form-item-left">
+                <span class="material-symbols-outlined form-icon"
+                  >build_circle</span
+                >
+                <div class="form-info">
+                  <span class="form-name"
+                    >Solicitud de Incidencias y Requerimientos</span
+                  >
+                </div>
+              </div>
+              <span class="material-symbols-outlined form-arrow"
+                >chevron_right</span
+              >
+            </a>
+          </li>
+          <li>
+            <a
+              href="https://app.notion.com/p/mcgroupvenezuela/Solicitud-Permisos-Live-Agent-161a6bf84cf78011bbc0f50e2dface2e?source=copy_link"
+              class="form-item-link"
+            >
+              <div class="form-item-left">
+                <span class="material-symbols-outlined form-icon"
+                  >support_agent</span
+                >
+                <div class="form-info">
+                  <span class="form-name">Solicitud de Permisos LiveAgent</span>
+                </div>
+              </div>
+              <span class="material-symbols-outlined form-arrow"
+                >chevron_right</span
+              >
+            </a>
+          </li>
+        </ul>
+      </div>
+
+      <!-- ========================================= Tarjeta: Inteligencia de Negocio ========================================= -->
+      <div class="dept-card">
+        <div class="dept-header">
+          <div class="dept-icon-wrapper">
+            <span class="material-symbols-outlined">analytics</span>
+          </div>
+          <h2 class="dept-title">Inteligencia de Negocio</h2>
+        </div>
+        <ul class="forms-list">
+          <li>
+            <a
+              href="https://www.notion.so/mcgroupvenezuela/Formulario-de-permisos-Notion-y-Workspace-24fa6bf84cf780fdbbb9eeeb3e82df17?source=copy_link"
+              class="form-item-link"
+            >
+              <div class="form-item-left">
+                <span class="material-symbols-outlined form-icon"
+                  >lock_open</span
+                >
+                <div class="form-info">
+                  <span class="form-name"
+                    >Solicitudes de Permisos en Notion y Workspace</span
+                  >
+                </div>
+              </div>
+              <span class="material-symbols-outlined form-arrow"
+                >chevron_right</span
+              >
+            </a>
+          </li>
+          <li>
+            <a
+              href="https://www.notion.so/mcgroupvenezuela/Solicitudes-a-BI-240a6bf84cf78021a919cdaf8dabe5a9?source=copy_link"
+              class="form-item-link"
+            >
+              <div class="form-item-left">
+                <span class="material-symbols-outlined form-icon"
+                  >assignment</span
+                >
+                <div class="form-info">
+                  <span class="form-name">Solicitudes de Tareas a BI</span>
+                </div>
+              </div>
+              <span class="material-symbols-outlined form-arrow"
+                >chevron_right</span
+              >
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</html>

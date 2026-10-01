@@ -1,0 +1,631 @@
+<!-- 
+  Guía Completa de Administración y Edición
+  1. Cómo modificar el titulo:
+    Edita el texto que se encuentra dentro de la etiqueta <h2 class="section-title">...</h2> 
+    
+  2. Cómo editar el texto debajo del titulo "100% Calidad!"
+    Edita el texto que se encuentra dentro de la etiqueta <span class="section-subtitle">...</span> 
+    
+  3. Cómo editar el mes de reconocimiento
+    Edita el texto que se encuentra dentro de la etiqueta <span class="period-badge">...</span>
+      
+  4. Cómo editar la imagen de los ganadores
+  ubica la etiqueta img con la clase class="avatar-img", edita la URL dentro de src=""
+    
+  6. Cómo editar el nombre de los ganadores
+    Edita el texto que se encuentra dentro de la etiqueta <h3 class="profile-name">...</h3>
+    
+  7. Cómo editar el cargo de los ganadores
+    Edita el texto que se encuentra dentro de la etiqueta <p class="profile-role">...</p>
+    
+  8. Cómo editar el departamento de los ganadores
+    Edita el texto que se encuentra dentro de la etiqueta <span class="profile-dept">...</span>
+
+  9. Cómo editar la descripción de los ganadores
+    Edita el texto que se encuentra dentro de la etiqueta <p class="merit-text">... </p>
+-->
+
+<html>
+  <head>
+    <!-- Carga de Fuentes de Google e Iconos de Material -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0..1,0"
+    />
+
+    <!-- Estilos CSS Nativos -->
+    <style>
+      :root {
+        --primary-container: #ffd200;
+        --on-primary-container: #705b00;
+        --primary: #725c00;
+        --on-primary: #ffffff;
+        --on-surface: #191c1d;
+        --secondary: #5d5e61;
+        --on-surface-variant: #4d4632;
+        --surface-container-lowest: #ffffff;
+        --surface-container-low: #f3f4f5;
+        --background: #f8f9fa;
+        --font-family-base: "Inter", sans-serif;
+      }
+
+      /* Reinicio básico para el contenedor insertado */
+      .grid-embed-wrapper {
+        font-family: var(--font-family-base);
+        color: var(--on-surface);
+        width: 100%;
+        box-sizing: border-box;
+      }
+
+      /* Sección Principal */
+      .hall-of-fame-section {
+        max-width: 1440px;
+        margin: 0 auto;
+      }
+
+      /* Encabezado de la Sección */
+      .section-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 1.5rem;
+      }
+
+      .section-title {
+        font-size: 1.5rem;
+        line-height: 2rem;
+        font-weight: 600;
+        color: var(--on-surface);
+        margin: 0;
+      }
+
+      .section-subtitle {
+        font-size: 0.875rem;
+        line-height: 1.25rem;
+        color: var(--secondary);
+        margin-top: 0.25rem;
+        margin-bottom: 0;
+      }
+
+      /* Disposición de la Cuadrícula */
+      .honorees-grid {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+      }
+
+      @media (min-width: 768px) {
+        .honorees-grid {
+          grid-template-columns: repeat(2, 1fr);
+        }
+      }
+
+      @media (min-width: 1024px) {
+        .honorees-grid {
+          grid-template-columns: repeat(3, 1fr);
+        }
+      }
+
+      /* Tarjeta Individual de Reconocimiento */
+      .honoree-card {
+        background-color: var(--surface-container-lowest);
+        border-radius: 0.75rem;
+        padding: 1.5rem;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+        transition: all 0.2s ease-in-out;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .honoree-card:hover {
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+      }
+
+      /* Detalle decorativo de esquina superior derecha */
+      .card-corner-decor {
+        position: absolute;
+        top: 0;
+        right: 0;
+        width: 6rem;
+        height: 6rem;
+        background-color: rgba(255, 210, 0, 0.2);
+        border-bottom-left-radius: 9999px;
+        pointer-events: none;
+      }
+
+      /* Cabecera de la Tarjeta */
+      .card-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 0.5rem;
+        margin-bottom: 1.5rem;
+      }
+
+      .period-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.25rem;
+        font-size: 0.75rem;
+        line-height: 1rem;
+        font-weight: 700;
+        letter-spacing: 0.05em;
+        padding: 0.125rem 0.5rem;
+        border-radius: 9999px;
+        background-color: var(--primary-container);
+        color: var(--on-primary-container);
+      }
+
+      .period-badge .material-symbols-outlined {
+        font-size: 14px;
+        font-variation-settings: "FILL" 1;
+      }
+
+      /* Fila de Perfil y Foto */
+      .profile-row {
+        display: flex;
+        align-items: center;
+        gap: 1.5rem;
+      }
+
+      .avatar-wrapper {
+        position: relative;
+        flex-shrink: 0;
+      }
+
+      .avatar-img {
+        width: 4rem;
+        height: 4rem;
+        border-radius: 9999px;
+        object-fit: cover;
+        box-shadow: inset 0 2px 4px 0 rgba(0, 0, 0, 0.06);
+      }
+
+      .verified-icon {
+        position: absolute;
+        bottom: -0.25rem;
+        right: -0.25rem;
+        width: 1.5rem;
+        height: 1.5rem;
+        border-radius: 9999px;
+        background-color: var(--primary);
+        color: var(--on-primary);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+      }
+
+      .verified-icon .material-symbols-outlined {
+        font-size: 14px;
+        font-variation-settings: "FILL" 1;
+      }
+
+      .profile-info {
+        min-width: 0;
+      }
+
+      .profile-name {
+        font-size: 1.125rem;
+        line-height: 1.5rem;
+        font-weight: 600;
+        color: var(--on-surface);
+        margin: 0;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        transition: color 0.2s ease;
+      }
+
+      .honoree-card:hover .profile-name {
+        color: var(--primary);
+      }
+
+      .profile-role {
+        font-size: 0.875rem;
+        line-height: 1.25rem;
+        color: var(--secondary);
+        font-weight: 500;
+        margin: 0;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+
+      .profile-dept {
+        font-size: 0.75rem;
+        line-height: 1rem;
+        color: var(--on-surface-variant);
+        letter-spacing: 0.05em;
+        display: block;
+      }
+
+      /* Bloque Narrativo de Mérito Operativo */
+      .merit-box {
+        margin-top: 1.5rem;
+        background-color: var(--surface-container-low);
+        padding: 1rem;
+        border-radius: 0.5rem;
+      }
+
+      .merit-text {
+        font-size: 0.875rem;
+        line-height: 1.25rem;
+        color: var(--on-surface);
+        margin: 0;
+        display: -webkit-box;
+        -webkit-line-clamp: 10;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+      }
+
+      /* Estado Vacío para Filtros (Oculto por defecto) */
+      .no-results-state {
+        display: none;
+        text-align: center;
+        padding: 4rem 1.5rem;
+        background-color: var(--surface-container-lowest);
+        border-radius: 0.75rem;
+        box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+        margin-top: 1.5rem;
+      }
+
+      .no-results-state .material-symbols-outlined {
+        font-size: 48px;
+        color: var(--secondary);
+      }
+
+      .no-results-title {
+        font-size: 1.5rem;
+        line-height: 2rem;
+        font-weight: 600;
+        color: var(--on-surface);
+        margin: 0.5rem 0 0 0;
+      }
+
+      .no-results-desc {
+        font-size: 0.875rem;
+        line-height: 1.25rem;
+        color: var(--secondary);
+        max-width: 24rem;
+        margin: 0.5rem auto 0 auto;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="grid-embed-wrapper">
+      <!-- Sección 2: Muro de Honor - Cuadrícula de Tarjetas de Reconocimiento -->
+      <section class="hall-of-fame-section">
+        <div class="section-header">
+          <div>
+            <!-- =========================== TITULO =========================== -->
+            <h2 class="section-title">100% Calidad!</h2>
+
+            <!-- =========================== TEXTO =========================== -->
+            <p class="section-subtitle">
+              Auditoría 100% blindada durante 30 días continuos
+            </p>
+          </div>
+        </div>
+
+        <!-- Cuadrícula de Colaboradores -->
+        <div class="honorees-grid">
+          <!-- =========================== Tarjeta 1: Cristian Lara =========================== -->
+          <article
+            class="honoree-card"
+            data-area="fraude"
+            data-name="Alejandro Morales"
+            data-period="sep-2026"
+          >
+            <div class="card-corner-decor"></div>
+            <div>
+              <div class="card-header">
+                <span class="period-badge">
+                  <!-- =========================== ICONO =========================== -->
+                  <span class="material-symbols-outlined">star</span>
+
+                  <!-- =========================== FECHA =========================== -->
+                  Septiembre 2026
+                </span>
+              </div>
+
+              <div class="profile-row">
+                <div class="avatar-wrapper">
+                  <!-- =========================== IMAGEN =========================== -->
+                  <img
+                    class="avatar-img"
+                    alt="Retrato fotográfico corporativo de Cristian Lara"
+                    src="https://lh3.googleusercontent.com/a-/ALV-UjVUXLvBO9l2C-Ar5wKJdT3dw_6g1eIzG6jjPnfqqGjdkfUFiCx0=s240-p-k-rw-no"
+                  />
+                  <span
+                    class="verified-icon"
+                    title="Auditoría Certificada - 0 Faltas"
+                  >
+                    <span class="material-symbols-outlined">verified_user</span>
+                  </span>
+                </div>
+                <div class="profile-info">
+                  <!-- =========================== NOMBRE =========================== -->
+                  <h3 class="profile-name">Cristian Lara</h3>
+
+                  <!-- =========================== CARGO =========================== -->
+                  <p class="profile-role">Analista de Control de Procesos</p>
+
+                  <!-- =========================== DEPARTAMENTO =========================== -->
+                  <span class="profile-dept">Control y Procesos</span>
+                </div>
+              </div>
+
+              <div class="merit-box">
+                <!-- =========================== DESCRIPCION =========================== -->
+                <p class="merit-text">
+                  Mantuvo un índice de 0% de errores en más de 2,400
+                  transacciones de juego cruzado auditadas y resolución sin
+                  desvíos de protocolo bajo picos de alta afluencia nocturna.
+                </p>
+              </div>
+            </div>
+          </article>
+
+          <!-- Tarjeta 2: Valeria Cárdenas -->
+          <article
+            class="honoree-card"
+            data-area="vip"
+            data-name="Valeria Cárdenas"
+            data-period="sep-2026"
+          >
+            <div class="card-corner-decor"></div>
+            <div>
+              <div class="card-header">
+                <span class="period-badge">
+                  <span class="material-symbols-outlined">star</span>
+                  Septiembre 2026
+                </span>
+              </div>
+
+              <div class="profile-row">
+                <div class="avatar-wrapper">
+                  <img
+                    class="avatar-img"
+                    alt="Retrato profesional de Valeria Cárdenas"
+                    src="https://lh3.googleusercontent.com/aida-public/AB6AXuBrN9GD8KkzyoWnJXU1TPMNTutTbu3pzAooEflOLYla6J2SRLpul5A_CXosL0tq9NgTFaERP6beNeiQqhGkhamlcaHXABwi9sTz80m2CR4LY7-zpyo-Tgb4thDZRzDExw5ANFE2FQ6HgAcpX8JWpwZYWhU7NvCCs1ajfnIzkXGK2Me3qDkS3SqSChhmVBkYA0z0eh3Q6Ez3_nX_d88NRH9dqnXKTB8gu3F9Pjj0tp-Iyybau-1adcsk"
+                  />
+                  <span
+                    class="verified-icon"
+                    title="Auditoría Certificada - 0 Faltas"
+                  >
+                    <span class="material-symbols-outlined">verified_user</span>
+                  </span>
+                </div>
+                <div class="profile-info">
+                  <h3 class="profile-name">Valeria Cárdenas</h3>
+                  <p class="profile-role">Especialista en Mesa VIP</p>
+                  <span class="profile-dept"
+                    >Soporte VIP &amp; High Rollers</span
+                  >
+                </div>
+              </div>
+
+              <div class="merit-box">
+                <p class="merit-text">
+                  Atendió 850 solicitudes de usuarios VIP de alto volumen con
+                  100% de apego a la guía de cumplimiento regulatorio y tiempos
+                  récord de respuesta menores a 45 segundos.
+                </p>
+              </div>
+            </div>
+          </article>
+
+          <!-- Tarjeta 3: Rodrigo Silva -->
+          <article
+            class="honoree-card"
+            data-area="pagos"
+            data-name="Rodrigo Silva"
+            data-period="sep-2026"
+          >
+            <div class="card-corner-decor"></div>
+            <div>
+              <div class="card-header">
+                <span class="period-badge">
+                  <span class="material-symbols-outlined">star</span>
+                  Septiembre 2026
+                </span>
+              </div>
+
+              <div class="profile-row">
+                <div class="avatar-wrapper">
+                  <img
+                    class="avatar-img"
+                    alt="Foto de perfil corporativa de Rodrigo Silva"
+                    src="https://lh3.googleusercontent.com/aida-public/AB6AXuCF58I7VBw6f60MUZN0AWyuub8vbWApParZCTk2VpSG7O-fMuVkompLBI_zMr_0UuSvKR4AE4S2s0A29lUjmDQ6H5o84iGBzqHiIPGnqSrpNyTDnyLj8vsFm7vdY1QM5_d_Pz5cXiMP9IteWqlMZWhZq2xmv-RJEu_ddFwAQI-6rXI-lwTpEqNQF6lbANpNK3AvkiqtpbJO7w7pE1CQeuc25cP_M76Q1HVzQn_y1Ji3KKgxhO4fAwO4"
+                  />
+                  <span
+                    class="verified-icon"
+                    title="Auditoría Certificada - 0 Faltas"
+                  >
+                    <span class="material-symbols-outlined">verified_user</span>
+                  </span>
+                </div>
+                <div class="profile-info">
+                  <h3 class="profile-name">Rodrigo Silva</h3>
+                  <p class="profile-role">Operador Turno Noche - Pasarelas</p>
+                  <span class="profile-dept">Pagos &amp; Retiros</span>
+                </div>
+              </div>
+
+              <div class="merit-box">
+                <p class="merit-text">
+                  Validó y reconcilió más de 3,100 transacciones bancarias
+                  instantáneas durante turnos nocturnos, logrando discrepancia
+                  cero y aprobación del 100% en auditoría ciega.
+                </p>
+              </div>
+            </div>
+          </article>
+
+          <!-- Tarjeta 4: Paola Méndez -->
+          <article
+            class="honoree-card"
+            data-area="mesa"
+            data-name="Paola Méndez"
+            data-period="sep-2026"
+          >
+            <div class="card-corner-decor"></div>
+            <div>
+              <div class="card-header">
+                <span class="period-badge">
+                  <span class="material-symbols-outlined">star</span>
+                  Septiembre 2026
+                </span>
+              </div>
+
+              <div class="profile-row">
+                <div class="avatar-wrapper">
+                  <img
+                    class="avatar-img"
+                    alt="Retrato empresarial de Paola Méndez"
+                    src="https://lh3.googleusercontent.com/aida-public/AB6AXuARIpEfW3woznoP9BJ8Kvd1SgQvjg5sIE6-uOFWcM1xXIKUKPGLhHwY3Pzq2GE7Tl530c5ZaWseBLO_AEillrXc6JLv5xfya8JGRot8hOYb3ssjQqTKjYjQCXAXedbHLqefowUSp-WJvuINlFYLMqvxZcaHPJNOk3w2j0YtrUIxwpgq-imOjg4m_CiPO6cEZLbMFd0NxTsasQRCq2cjv-gCHpwxmRnl66s02iWNlEvh19vFFvujz80M"
+                  />
+                  <span
+                    class="verified-icon"
+                    title="Auditoría Certificada - 0 Faltas"
+                  >
+                    <span class="material-symbols-outlined">verified_user</span>
+                  </span>
+                </div>
+                <div class="profile-info">
+                  <h3 class="profile-name">Paola Méndez</h3>
+                  <p class="profile-role">Auditora de Procesos en Vivo</p>
+                  <span class="profile-dept">Mesa de Control y Riesgo</span>
+                </div>
+              </div>
+
+              <div class="merit-box">
+                <p class="merit-text">
+                  Lideró la calibración y control de 1,200 eventos en vivo
+                  simultáneos, ejecutando revisiones dobles sin una sola omisión
+                  de registro en los logs regulatorios de la licencia.
+                </p>
+              </div>
+            </div>
+          </article>
+
+          <!-- Tarjeta 5: Diego Arrieta -->
+          <article
+            class="honoree-card"
+            data-area="atencion"
+            data-name="Diego Arrieta"
+            data-period="sep-2026"
+          >
+            <div class="card-corner-decor"></div>
+            <div>
+              <div class="card-header">
+                <span class="period-badge">
+                  <span class="material-symbols-outlined">star</span>
+                  Septiembre 2026
+                </span>
+              </div>
+
+              <div class="profile-row">
+                <div class="avatar-wrapper">
+                  <img
+                    class="avatar-img"
+                    alt="Retrato de Diego Arrieta"
+                    src="https://lh3.googleusercontent.com/aida-public/AB6AXuAothb2QagkiH3WIt0InFB_PZJ7MfDElQmWtF_G4wm-CRSxUsoG1J7nSnZF1sJpblXuqUS-Ix7dKu_FT5jR9sjg_WVhibZHBeyJIsw3KcA4TMfXsjTtKhcUPiKjCouhjb9BDpMLjPDrqLTr7bu1pKLJj73owlCZ68-uFs8rPWmuswWSuRZSkE3UNHfObnI7O53Y05BOuHL3w2fcCku3Lk_wMPq6p3gZaQainOOuVPKS5NBvYXgnkmcQ"
+                  />
+                  <span
+                    class="verified-icon"
+                    title="Auditoría Certificada - 0 Faltas"
+                  >
+                    <span class="material-symbols-outlined">verified_user</span>
+                  </span>
+                </div>
+                <div class="profile-info">
+                  <h3 class="profile-name">Diego Arrieta</h3>
+                  <p class="profile-role">Líder de Soporte al Jugador</p>
+                  <span class="profile-dept">Atención al Cliente</span>
+                </div>
+              </div>
+
+              <div class="merit-box">
+                <p class="merit-text">
+                  Completó 1,940 interacciones con un CSAT del 99.4% y 100% de
+                  cumplimiento en pautas de Juego Responsable, escalamiento
+                  antiblanqueo y verificación de identidad.
+                </p>
+              </div>
+            </div>
+          </article>
+
+          <!-- Tarjeta 6: Lucía Paredes -->
+          <article
+            class="honoree-card"
+            data-area="fraude"
+            data-name="Lucía Paredes"
+            data-period="sep-2024"
+          >
+            <div class="card-corner-decor"></div>
+            <div>
+              <div class="card-header">
+                <span class="period-badge">
+                  <span class="material-symbols-outlined">star</span>
+                  Septiembre 2024
+                </span>
+              </div>
+
+              <div class="profile-row">
+                <div class="avatar-wrapper">
+                  <img
+                    class="avatar-img"
+                    alt="Fotografía ejecutiva de Lucía Paredes"
+                    src="https://lh3.googleusercontent.com/aida-public/AB6AXuABbKtt1n54D2OkwrzbNQXhga6q9zME6nXkEnM1N67Jam5DdndjCSC76kdnZfBtgHGXqcoapCmQSViDuihcR3-RDYBbK9ESj1qo-wziukutIy7xaYtfhhoj1-UPtbEWTL-cLi4BZL37c8OST97VVD-Og56UJT6Yyn5byyewlbICGaqbcLjTMdS-FVZHmV9LnphOC3kPFINPLJfSkzQFxycK-cXsP_mdLnBPHerWia80vhD_6Ev8tc-m"
+                  />
+                  <span
+                    class="verified-icon"
+                    title="Auditoría Certificada - 0 Faltas"
+                  >
+                    <span class="material-symbols-outlined">verified_user</span>
+                  </span>
+                </div>
+                <div class="profile-info">
+                  <h3 class="profile-name">Lucía Paredes</h3>
+                  <p class="profile-role">
+                    Especialista en Detección de Colusión
+                  </p>
+                  <span class="profile-dept">Monitoreo de Fraude</span>
+                </div>
+              </div>
+
+              <div class="merit-box">
+                <p class="merit-text">
+                  Detectó e investigó 42 anomalías complejas de patrones
+                  multi-cuenta con rigor pericial absoluto, sin falsos positivos
+                  y avalada por auditoría forense externa.
+                </p>
+              </div>
+            </div>
+          </article>
+        </div>
+
+        <!-- Estado vacío cuando no se encuentran resultados -->
+        <div class="no-results-state" id="no-results">
+          <span class="material-symbols-outlined">person_search</span>
+          <h4 class="no-results-title">No se encontraron registros</h4>
+          <p class="no-results-desc">
+            No hay colaboradores distinguidos con los filtros seleccionados para
+            este ciclo de auditoría.
+          </p>
+        </div>
+      </section>
+    </div>
+  </body>
+</html>

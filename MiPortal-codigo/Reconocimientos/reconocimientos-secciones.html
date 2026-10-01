@@ -1,0 +1,449 @@
+<!-- 
+  Guía Completa de Administración y Edición
+
+  1. Cómo agregar una nueva tarjeta:
+    Copiar y pegar desde una tarjeta <article class="card-article"> hasta <article> y modificar el contenido
+    
+  2. Cómo eliminar una tarjeta:
+    Ubicar que tarjeta se quiere eliminar (1, 2 o 3), ubicarla y borrar todo el elemento desde <article class="card-article">  hasta <article>
+    
+  3. Modificar datos:
+    Imagen: Pegar la nueva URL dentro del atributo src="" de la etiqueta img con la clase "media-image"
+    Titulo: editar el texto dentro de <h2 class="card-title">...</h2>
+    Parrafo: editar el texto dentro de <p class="card-text">...</p>
+    Boton con URL 👇🏽
+      URL: Pegar la nueva URL dentro de las comillas de href="" de la etiqueta 
+      Titulo: Editar el texto dentro de las etiqueta <span>...</span> dentro de la clase btn-cta, que se quiera modificar
+
+-->
+
+<html>
+  <head>
+    <!-- Carga de Fuentes de Google y Símbolos de Material -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0"
+      rel="stylesheet"
+    />
+
+    <!-- Estilos CSS Nativos -->
+    <style>
+      :root {
+        --color-primary: #725c00;
+        --color-primary-container: #ffd200;
+        --color-on-primary-container: #705b00;
+        --color-on-primary: #ffffff;
+        --color-on-surface: #191c1d;
+        --color-on-surface-variant: #4d4632;
+        --color-on-secondary: #ffffff;
+        --color-surface-container: #edeeef;
+        --color-surface-container-high: #e7e8e9;
+        --color-surface-container-highest: #e1e3e4;
+        --color-surface-container-lowest: #ffffff;
+        --color-inverse-surface: #2e3132;
+        --font-family: "Inter", sans-serif;
+      }
+
+      body {
+        margin: 0;
+        padding: 0;
+        font-family: var(--font-family);
+        background-color: transparent;
+        color: var(--color-on-surface);
+        -webkit-font-smoothing: antialiased;
+      }
+
+      .grid-container {
+        max-width: 1440px;
+        margin: 0 auto;
+        box-sizing: border-box;
+      }
+
+      /* Diseños de la Grilla (1 Columna en Móvil, 3 Columnas en Escritorio) */
+      .cards-grid {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 24px;
+        align-items: stretch;
+      }
+
+      @media (min-width: 880px) {
+        .cards-grid {
+          grid-template-columns: repeat(3, 1fr);
+        }
+      }
+
+      /* Estructura Base de la Tarjeta */
+      .card-article {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        background-color: var(--color-surface-container-lowest);
+        border-radius: 12px;
+        padding: 24px;
+        margin-top: 15px;
+        box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+        transition: all 0.3s ease;
+        overflow: hidden;
+        box-sizing: border-box;
+      }
+
+      @media (min-width: 768px) {
+        .card-article {
+          padding: 20px 15px;
+        }
+      }
+
+      .card-article:hover {
+        box-shadow:
+          0 20px 25px -5px rgba(0, 0, 0, 0.1),
+          0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        transform: translateY(-6px);
+      }
+
+      /* Destello traslucido en las esquinas */
+      .card-flare {
+        position: absolute;
+        right: -64px;
+        top: -64px;
+        width: 192px;
+        height: 192px;
+        background-color: rgba(255, 210, 0, 0.2);
+        border-radius: 9999px;
+        filter: blur(24px);
+        transition: background-color 0.5s ease;
+        pointer-events: none;
+      }
+
+      .card-article:hover .card-flare {
+        background-color: rgba(255, 210, 0, 0.35);
+      }
+
+      .card-flare-subtle {
+        background-color: rgba(231, 232, 233, 0.4);
+      }
+
+      .card-article:hover .card-flare-subtle {
+        background-color: rgba(255, 210, 0, 0.2);
+      }
+
+      .card-item {
+        display: flex;
+        flex-direction: column;
+        gap: 0.7rem;
+      }
+
+      .icon-box {
+        width: 56px;
+        height: 56px;
+        border-radius: 12px;
+        background-color: var(--color-inverse-surface);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--color-primary-container);
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s ease;
+      }
+
+      .category-pill {
+        padding: 4px 16px;
+        background-color: var(--color-surface-container);
+        color: var(--color-on-surface-variant);
+        font-size: 12px;
+        line-height: 16px;
+        letter-spacing: 0.05em;
+        border-radius: 9999px;
+        font-weight: 600;
+        text-transform: uppercase;
+      }
+
+      /* Banner Visual e Imagen */
+      .media-banner {
+        position: relative;
+        height: 176px;
+        width: 100%;
+        border-radius: 8px;
+        overflow: hidden;
+        margin-bottom: 24px;
+        background-color: var(--color-surface-container);
+        box-shadow: inset 0 2px 4px 0 rgba(0, 0, 0, 0.06);
+      }
+
+      .media-image {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.5s ease;
+      }
+
+      .card-article:hover .media-image {
+        transform: scale(1.05);
+      }
+
+      .media-overlay {
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(
+          180deg,
+          transparent 0%,
+          rgba(46, 49, 50, 0.2) 40%,
+          rgba(46, 49, 50, 0.8) 100%
+        );
+      }
+
+      .caption-label {
+        font-size: 14px;
+        line-height: 20px;
+        font-weight: 600;
+        display: flex;
+        align-items: center;
+        gap: 4px;
+      }
+
+      .caption-badge {
+        font-size: 12px;
+        line-height: 16px;
+        letter-spacing: 0.05em;
+        padding: 2px 8px;
+        border-radius: 4px;
+        font-weight: 700;
+      }
+
+      .badge-gold {
+        background-color: var(--color-primary);
+        color: var(--color-on-primary);
+      }
+
+      .badge-light {
+        background-color: var(--color-surface-container-highest);
+        color: var(--color-on-surface);
+      }
+
+      .badge-dark {
+        background-color: var(--color-inverse-surface);
+        color: var(--color-primary-container);
+      }
+
+      /* Contenido Textual */
+      .card-title {
+        margin: 0 0 8px 0;
+        font-size: 32px;
+        line-height: 40px;
+        letter-spacing: -0.01em;
+        font-weight: 600;
+        color: var(--color-on-surface);
+      }
+
+      .card-text {
+        margin: 0 0 24px 0;
+        font-size: 16px;
+        line-height: 24px;
+        color: var(--color-on-surface-variant);
+      }
+
+      .micro-tag {
+        display: inline-flex;
+        align-items: center;
+        gap: 4px;
+        padding: 4px 10px;
+        border-radius: 6px;
+        background-color: var(--color-surface-container-high);
+        color: var(--color-on-surface);
+        font-size: 12px;
+        line-height: 16px;
+        letter-spacing: 0.05em;
+        font-weight: 600;
+      }
+
+      .micro-tag-highlight {
+        background-color: rgba(255, 210, 0, 0.3);
+        color: var(--color-on-primary-container);
+      }
+
+      /* Botones de Acción (CTA) */
+      .btn-cta {
+        width: 100%;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        padding: 12px 24px;
+        border-radius: 8px;
+        font-size: 16px;
+        line-height: 24px;
+        font-weight: 600;
+        text-decoration: none;
+        transition: all 0.2s ease;
+        box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+        box-sizing: border-box;
+      }
+
+      .btn-primary {
+        background-color: var(--color-primary-container);
+        color: var(--color-on-primary-container);
+      }
+
+      .btn-primary:hover {
+        background-color: var(--color-primary);
+        color: var(--color-on-primary);
+      }
+
+      .btn-secondary {
+        background-color: var(--color-surface-container);
+        color: var(--color-on-surface);
+      }
+
+      .btn-secondary:hover {
+        background-color: var(--color-primary-container);
+        color: var(--color-on-primary-container);
+      }
+
+      .btn-arrow {
+        font-size: 20px !important;
+        transition: transform 0.2s ease;
+      }
+
+      .btn-cta:hover .btn-arrow {
+        transform: translateX(4px);
+      }
+
+      /* Utilidades para Símbolos */
+      .icon-fill {
+        font-variation-settings: "FILL" 1;
+      }
+      .icon-sm {
+        font-size: 14px !important;
+      }
+      .icon-md {
+        font-size: 18px !important;
+      }
+      .icon-lg {
+        font-size: 30px !important;
+      }
+      .text-primary {
+        color: var(--color-primary);
+      }
+      .text-gold {
+        color: var(--color-primary-container);
+      }
+    </style>
+  </head>
+
+  <body>
+    <!-- Estructura HTML de la Grilla de Tarjetas -->
+    <div class="grid-container">
+      <section class="cards-grid">
+        <!-- ===========================  TARJETA 1: Premios WOW! =========================== -->
+        <article class="card-article">
+          <div class="card-flare"></div>
+          <div class="card-item">
+            <div class="media-banner">
+              <!-- =========================== IMAGEN =========================== -->
+              <img
+                class="media-image"
+                src="https://lh3.googleusercontent.com/aida-public/AB6AXuBv5tUxWr8pnXsnWMBYaYBQ1r0gtuq5_SObCZGEDKJOdoIG08AlEUdpo-aoBPGNUWecSL8AfmzzWw3tAjiS7q-XYQ6xaW1eWw-adWcs5G86ko8iyd324dCCkuXCItiWH_bysppHiIz6WSDEtaG3LX3xISPp32NWCPAIFR7UFVubbkSTjeALSVJbaWWQFhm530VCXgYbDT2SBiPM37GM9pID0tH13aqYA83WcmhszcWmInVXzHQpC4VZ"
+                alt="Trofeo de oro sobre podio corporativo"
+              />
+              <div class="media-overlay"></div>
+            </div>
+
+            <!-- =========================== TITULO =========================== -->
+            <h2 class="card-title">Premios WOW!</h2>
+            <!-- =========================== PARRAFO =========================== -->
+            <p class="card-text">
+              Incentivos trimestrales y anuales que celebran el rendimiento
+              extraordinario, la entrega excepcional y los hitos comerciales
+              superados en cada jugada estratégica.
+            </p>
+          </div>
+          <div>
+            <!-- =========================== LINK =========================== -->
+            <a
+              class="btn-cta btn-primary"
+              href="https://sites.google.com/correomc.com/portal-coporativo-micasino/reconocimientos/premios-wow"
+            >
+              <!-- =========================== Titulo del boton =========================== -->
+              <span>Explorar Premios</span>
+              <span class="material-symbols-outlined btn-arrow"
+                >arrow_forward</span
+              >
+            </a>
+          </div>
+        </article>
+
+        <!-- ===========================  TARJETA 2: Historias WOW! =========================== -->
+        <article class="card-article">
+          <div class="card-flare card-flare-subtle"></div>
+          <div class="card-item">
+            <div class="media-banner">
+              <img
+                class="media-image"
+                src="https://lh3.googleusercontent.com/aida-public/AB6AXuDkU1XuYzwNnGwmWgxk2zKORi-POSgvNIbF7LO3Z_aZEOY_vX7znVrS_xN0fdAoErDZWhE8iPhfX0i-I_-f2NanogvkmIcMZtbVXphyrlGwqRNguq7_FKLah52Aw5I69FDE6ofu_H5p9lAwWQGL8a_kMn6yMwMRflDsziBQ66WoT6nJvWKItDMclK_RoR2SNaIALa-OCf1we31VPleyGx1l16JwyTzC2yAzWqYUPUaY5wZngSRNNVnj"
+                alt="Grupo de colaboradores colaborando alegremente"
+              />
+              <div class="media-overlay"></div>
+            </div>
+
+            <h2 class="card-title">Historias WOW!</h2>
+            <p class="card-text">
+              Relatos reales de colaboradores que transformaron desafíos en
+              triunfos, demostrando liderazgo inspirador, resiliencia y
+              compañerismo en toda la organización.
+            </p>
+          </div>
+          <div>
+            <a
+              class="btn-cta btn-secondary"
+              href="https://sites.google.com/correomc.com/portal-coporativo-micasino/reconocimientos/historias-wow"
+            >
+              <span>Conocer Historias</span>
+              <span class="material-symbols-outlined btn-arrow"
+                >arrow_forward</span
+              >
+            </a>
+          </div>
+        </article>
+
+        <!-- =========================== TARJETA 3: 100% Calidad =========================== -->
+        <article class="card-article">
+          <div class="card-flare"></div>
+          <div class="card-item">
+            <div class="media-banner">
+              <img
+                class="media-image"
+                src="https://lh3.googleusercontent.com/aida-public/AB6AXuC6JI2SwCPc4AZLvucA-NAFG7_OUaW3QnhxbhnuVHoGzyWiItI3e3G2-7IA452H8RtOKZZGYlw9lvD7_PCucimo9B71B9Eoxz2yriaxwofJFPkXI5ruxvDQwkUP8SmAmUdZ3ilJEZ0GNKcKdJStAsj2ZMBkvFhnKkUgtuW2iBnSjaYWFNY5drr-kYMnPkdDb-JxsGECm5w1uSHK9Q_ZQ36V1W4JkIb0v6maw5-6uEe0t6X-W1u3LE7v"
+                alt="Panel digital de cumplimiento y sello de garantía"
+              />
+              <div class="media-overlay"></div>
+            </div>
+
+            <h2 class="card-title">100% Calidad</h2>
+            <p class="card-text">
+              El compromiso innegociable con el cumplimiento ético, la precisión
+              técnica, juego seguro y la optimización continua de procesos en
+              todas nuestras operaciones.
+            </p>
+          </div>
+          <div>
+            <a
+              class="btn-cta btn-secondary"
+              href="https://sites.google.com/correomc.com/portal-coporativo-micasino/reconocimientos/100-calidad"
+            >
+              <span>Ver Estándares</span>
+              <span class="material-symbols-outlined btn-arrow"
+                >arrow_forward</span
+              >
+            </a>
+          </div>
+        </article>
+      </section>
+    </div>
+  </body>
+</html>

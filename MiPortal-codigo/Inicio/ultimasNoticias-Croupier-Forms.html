@@ -236,7 +236,8 @@ Iconos:
         position: relative;
         overflow: hidden;
         height: 192px;
-        display: flex;
+        /* display: flex; */
+        display: none; /*Comentado debido a que no se usará*/
         flex-direction: column;
         justify-content: space-between;
         cursor: pointer;
@@ -297,6 +298,14 @@ Iconos:
       }
 
       /* Lista de Formularios Frecuentes */
+
+      .card-form {
+        display: flex;
+        padding: 24px;
+        flex-grow: 1;
+        justify-content: space-between;
+      }
+
       .forms-list {
         list-style: none;
         display: flex;
@@ -343,10 +352,11 @@ Iconos:
       }
 
       .forms-footer {
-        margin-top: 10px;
-        padding-top: 10px;
+        /* margin-top: auto; */
+        /* padding-top: 10px; */
         display: flex;
         justify-content: flex-end;
+        justify-self: flex-end;
       }
 
       .forms-footer-cta {
@@ -462,7 +472,7 @@ Iconos:
       </div>
 
       <!-- Lista de Formularios Frecuentes -->
-      <div class="card" style="padding: 24px; flex-grow: 1">
+      <div class="card card-form">
         <h3 class="card-title" style="margin-bottom: 24px">
           <span class="material-symbols-outlined">description</span> Formularios
           más usados
@@ -520,6 +530,41 @@ Iconos:
                 <span class="form-item-text"
                   >Solicitud de Permisos en Notion y Workspace</span
                 >
+              </div>
+              <span class="material-symbols-outlined form-item-arrow"
+                >arrow_right</span
+              >
+            </a>
+          </li>
+          <!-- Formulario 3, link dentro de href="" -->
+          <li>
+            <a
+              href="https://www.notion.so/mcgroupvenezuela/Formulario-Solicitudes-a-Dise-o-6aa34e6b944748a8b5b66a00e46e38a8?source=copy_link"
+              class="form-item-link"
+            >
+              <div class="form-item-content">
+                <span class="material-symbols-outlined form-item-icon"
+                  >palette</span
+                >
+                <span class="form-item-text">Solicitudes a diseño</span>
+              </div>
+              <span class="material-symbols-outlined form-item-arrow"
+                >arrow_right</span
+              >
+            </a>
+          </li>
+
+          <!-- Formulario 3, link dentro de href="" -->
+          <li>
+            <a
+              href="https://app.notion.com/native/p/mcgroupvenezuela/Formulario-de-permisos-Notion-y-Workspace-24fa6bf84cf780fdbbb9eeeb3e82df17?source=copy_link"
+              class="form-item-link"
+            >
+              <div class="form-item-content">
+                <span class="material-symbols-outlined form-item-icon"
+                  >health_cross</span
+                >
+                <span class="form-item-text">Solicitud APS</span>
               </div>
               <span class="material-symbols-outlined form-item-arrow"
                 >arrow_right</span

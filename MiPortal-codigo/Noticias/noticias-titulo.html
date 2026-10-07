@@ -1,647 +1,101 @@
-<!-- 
-Guía de edición rápida para el equipo
+<!-- Solo es posible editar el titulo y el texto descriptivo 
+1. para editar el titulo, edite el texto dentro de la etiqueta  <h1 class="main-title">
+2. para editar el texto descriptivo, edite el texto dentro de la etiqueta <p class="main-description">
 
-Noticias del Carrusel (slidesData en el JavaScript):
-  Para cambiar las imágenes, títulos o descripciones del carrusel, dirígete a la sección <script> al final del archivo.
-
-  Modifica las propiedades de cada objeto:
-    src: Enlace directo de la imagen.
-    badge: Categoria (ej. Corporativo, Tecnología, Procesos).
-    title: Título de la noticia destacado.
-    desc: Breve resumen explicativo.
-
-Textos de la Grilla Inferior del Carrusel:
-  En la sección HTML <div class="news-sub-grid">, puedes editar los títulos cortos (.news-sub-title) que corresponden a cada pestaña (Cierre en Perú, Nuevo Portal Intranet, Solicitudes C&P).
-
-Formularios más usados (<ul class="forms-list">):
-  Para agregar o modificar enlaces a Notion/Workspace, edita el atributo href="..." de cada etiqueta <a>.
-  Modifica el texto visible en la etiqueta <span class="form-item-text">...</span>.
-
-Iconos:
-  Puedes cambiar los iconos de Google Material Symbols modificando el nombre del icono dentro del <span class="material-symbols-outlined">nombre_icono</span> (ej. beach_access, build_circle, lock_open, description). 
 -->
+
 <html>
   <head>
     <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
       rel="stylesheet"
     />
     <link
       href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
       rel="stylesheet"
     />
+
     <style>
       :root {
         --font-family: "Inter", sans-serif;
       }
+
       * {
         box-sizing: border-box;
         margin: 0;
         padding: 0;
         font-family: var(--font-family), sans-serif;
       }
+
       body {
-        background: transparent;
+        background-color: transparent;
+        padding: 12px 16px;
       }
 
-      /* Estructura Principal en Grilla (2 Columnas) */
-      .bento-grid {
-        display: grid;
-        grid-template-columns: 2fr 1fr;
-        gap: 24px;
-      }
-
-      /* Tarjetas Basicas */
-      .card {
-        background-color: #ffffff;
-        border-radius: 12px;
-        box-shadow: 0 4px 12px rgba(26, 28, 30, 0.08);
-        border: 1px solid #e1e3e4;
-        overflow: hidden;
+      .news-header {
         display: flex;
         flex-direction: column;
+        gap: 10px;
+        border-bottom: 1px solid rgba(225, 227, 228, 0.7);
+        padding-bottom: 24px;
       }
 
-      /* Encabezado del Carrusel */
-      .card-header {
-        padding: 24px;
-        border-bottom: 1px solid #e1e3e4;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        background-color: #f8f9fa;
-      }
-      .card-title {
-        font-size: 24px;
-        font-weight: 600;
-        color: #191c1d;
-        display: flex;
-        align-items: center;
-        gap: 8px;
-      }
-      .card-title .material-symbols-outlined {
-        color: #725c00;
-      }
-      .icon-btn {
-        padding: 4px;
-        border-radius: 50%;
-        border: none;
-        background: transparent;
-        cursor: pointer;
-        color: #4d4632;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        transition: background-color 0.2s;
-      }
-      .icon-btn:hover {
-        background-color: #e1e3e4;
-      }
-
-      /* Area Visual del Carrusel */
-      .news-image-wrapper {
-        position: relative;
-        height: 300px;
-        flex-grow: 1;
-        overflow: hidden;
-      }
-      .news-img {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-        transition: opacity 0.4s ease-in-out;
-      }
-      .news-overlay {
-        position: absolute;
-        bottom: 0;
-        left: 0;
-        width: 100%;
-        background: linear-gradient(
-          to top,
-          rgba(25, 28, 29, 0.95) 0%,
-          rgba(25, 28, 29, 0.7) 60%,
-          transparent 100%
-        );
-        padding: 24px;
-        padding-top: 64px;
-        transition: opacity 0.3s ease;
-      }
-      .badge {
-        display: inline-block;
-        padding: 4px 8px;
-        background-color: #ffe07c;
-        color: #231b00;
-        font-size: 10px;
-        font-weight: 700;
-        text-transform: uppercase;
-        letter-spacing: 0.05em;
-        border-radius: 4px;
-        margin-bottom: 8px;
-      }
-      .news-headline {
-        font-size: 22px;
-        font-weight: 600;
-        color: #ffffff;
-        margin-bottom: 8px;
-        line-height: 1.3;
-      }
-      .news-text {
-        font-size: 14px;
-        color: #d9dadb;
-        display: -webkit-box;
-        -webkit-line-clamp: 2;
-        -webkit-box-orient: vertical;
-        overflow: hidden;
-      }
-
-      /* Pestañas de Navegacion Inferior del Carrusel */
-      .news-sub-grid {
-        display: grid;
-        grid-template-columns: repeat(3, 1fr);
-        background-color: #f8f9fa;
-      }
-      .news-sub-item {
-        padding: 16px;
-        border-right: 1px solid #e1e3e4;
-        text-decoration: none;
-        cursor: pointer;
-        transition: all 0.2s ease;
-        border-top: 3px solid transparent;
-      }
-      .news-sub-item:last-child {
-        border-right: none;
-      }
-      .news-sub-item:hover {
-        background-color: #edeeef;
-      }
-      .news-sub-item.active {
-        background-color: #ffffff;
-        border-top-color: #725c00;
-      }
-      .news-sub-title {
-        font-size: 12px;
-        font-weight: 600;
-        color: #4d4632;
-        margin-bottom: 4px;
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
-      }
-      .news-sub-item.active .news-sub-title,
-      .news-sub-item:hover .news-sub-title {
-        color: #725c00;
-      }
-      .news-sub-time {
-        font-size: 11px;
-        color: #5d5e61;
-      }
-
-      /* Pie del Carrusel */
-      .news-footer {
-        padding: 12px 24px;
-        background-color: #f8f9fa;
-        border-top: 1px solid #e1e3e4;
-        display: flex;
-        justify-content: flex-end;
-        align-items: center;
-      }
-      .news-all-link {
-        font-size: 13px;
-        font-weight: 600;
-        color: #725c00;
-        text-decoration: none;
+      .badge-channel {
         display: inline-flex;
         align-items: center;
-        gap: 6px;
-        transition: color 0.2s ease;
-      }
-      .news-all-link:hover {
-        color: #231b00;
-      }
-
-      /* Columna Derecha (Acciones y Formularios) */
-      .col-side {
-        display: none; /*Comentado para que no aparezca*/
-        flex-direction: column;
-        gap: 24px;
-      }
-
-      /* Tarjeta Croupier (Asistente IA) */
-      .croupier-card {
-        background-color: #ffd200;
-        border-radius: 12px;
-        box-shadow: 0 4px 12px rgba(26, 28, 30, 0.08);
-        border: 1px solid #e1e3e4;
-        padding: 15px 24px;
-        position: relative;
-        overflow: hidden;
-        height: 192px;
-        display: flex;
-        flex-direction: column;
-        justify-content: space-between;
-        cursor: pointer;
-        transition: all 0.3s ease;
-      }
-      .croupier-card:hover {
-        background-color: #463708;
-        border-color: #ffd200;
+        gap: 8px;
         color: #725c00;
-      }
-      .croupier-card:hover .croupier-title,
-      .croupier-card:hover .croupier-link,
-      .croupier-card:hover .croupier-desc {
-        color: #f0f0f3;
-      }
-      .croupier-card-glow {
-        position: absolute;
-        right: -20px;
-        top: -20px;
-        width: 128px;
-        height: 128px;
-        background-color: rgba(255, 224, 124, 0.2);
-        border-radius: 50%;
-        filter: blur(24px);
-      }
-      .bot-icon-wrapper {
-        width: 48px;
-        height: 48px;
-        background-color: #ffd200;
-        border-radius: 50%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        margin-bottom: 0px;
-        color: #705b00;
-      }
-      .croupier-title {
-        font-size: 24px;
         font-weight: 600;
-        color: #191c1d;
-        margin-bottom: 8px;
-        transition: all 0.3s ease;
-      }
-      .croupier-desc {
-        font-size: 14px;
-        color: #4d4632;
-        transition: all 0.3s ease;
-      }
-      .croupier-link {
-        padding-top: 10px;
-        display: flex;
-        align-items: center;
-        gap: 8px;
-        color: #725c00;
         font-size: 12px;
-        font-weight: 600;
-        transition: all 0.3s ease;
+        letter-spacing: 0.05em;
+        text-transform: uppercase;
+        margin-bottom: 6px;
       }
 
-      /* Lista de Formularios Frecuentes */
-      .forms-list {
-        list-style: none;
-        display: flex;
-        flex-direction: column;
-        gap: 8px;
+      .badge-dot {
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background-color: #ffd200;
       }
-      .form-item-link {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        padding: 16px;
-        border-radius: 8px;
-        border: 1px solid #e1e3e4;
-        text-decoration: none;
-        transition: all 0.2s ease;
-      }
-      .form-item-link:hover {
-        border-color: #ffe07c;
-        background-color: #f3f4f5;
-      }
-      .form-item-content {
-        display: flex;
-        align-items: center;
-        gap: 16px;
-      }
-      .form-item-icon {
-        color: #4d4632;
-        transition: color 0.2s;
-      }
-      .form-item-link:hover .form-item-icon {
-        color: #725c00;
-      }
-      .form-item-text {
-        font-size: 14px;
+
+      .main-title {
+        font-size: 48px;
+        line-height: 40px;
+        font-weight: 700;
         color: #191c1d;
-      }
-      .form-item-arrow {
-        color: #5d5e61;
-        opacity: 0;
-        transition: opacity 0.2s;
-      }
-      .form-item-link:hover .form-item-arrow {
-        opacity: 1;
+        letter-spacing: -0.01em;
       }
 
-      .forms-footer {
-        margin-top: 10px;
-        padding-top: 10px;
-        display: flex;
-        justify-content: flex-end;
+      .main-description {
+        font-size: 18px;
+        line-height: 24px;
+        color: #4d4632;
+        margin-top: 8px;
+        max-width: 800px;
       }
 
-      .forms-footer-cta {
-        margin-top: 10px;
-        color: #725c00;
-        font-weight: bold;
-        font-size: 12px;
-        text-decoration: none;
-        display: flex;
-        gap: 8px;
-        transition: transform 0.1s ease-in;
-      }
-      .forms-footer-cta:hover {
-        transform: translateY(-3px);
-      }
-
-      /* Responsivo para pantallas medianas/pequeñas */
-      @media (max-width: 1024px) {
-        .bento-grid {
-          grid-template-columns: 1fr;
+      @media (max-width: 768px) {
+        .main-title {
+          font-size: 24px;
+          line-height: 32px;
         }
       }
     </style>
   </head>
-
-  <!-- ================= CONTENEDOR BENTO GRID ================= -->
-  <section class="bento-grid">
-    <!-- 1. BLOQUE IZQUIERDO: CARRUSEL DE NOTICIAS -->
-    <div class="card">
-      <div class="card-header">
-        <h2 class="card-title">
-          <span class="material-symbols-outlined">newspaper</span>
-          Últimas Noticias
-        </h2>
-        <!-- Botones Manuales de Navegación -->
-        <div style="display: flex; gap: 4px">
-          <button class="icon-btn" id="btn-prev" title="Anterior">
-            <span class="material-symbols-outlined">chevron_left</span>
-          </button>
-          <button class="icon-btn" id="btn-next" title="Siguiente">
-            <span class="material-symbols-outlined">chevron_right</span>
-          </button>
-        </div>
-      </div>
-
-      <!-- Visor Principal (Se rellena automáticamente mediante JavaScript) -->
-      <div class="news-image-wrapper">
-        <img id="carousel-img" class="news-img" src="" alt="" />
-        <div class="news-overlay">
-          <span id="carousel-badge" class="badge">Corporativo</span>
-          <h3 id="carousel-title" class="news-headline"></h3>
-          <p id="carousel-desc" class="news-text"></p>
-        </div>
-      </div>
-
-      <!-- Pestañas de Navegación Inferior (Titulares Rápidos) -->
-      <div class="news-sub-grid">
-        <!-- Pestaña 1 -->
-        <div class="news-sub-item active" onclick="goToSlide(0)">
-          <p class="news-sub-title">Cierre en Perú</p>
-          <p class="news-sub-time">Noticia 1</p>
-        </div>
-        <!-- Pestaña 2 -->
-        <div class="news-sub-item" onclick="goToSlide(1)">
-          <p class="news-sub-title">Nuevo Portal Intranet</p>
-          <p class="news-sub-time">Noticia 2</p>
-        </div>
-        <!-- Pestaña 3 -->
-        <div class="news-sub-item" onclick="goToSlide(2)">
-          <p class="news-sub-title">Solicitudes C&P</p>
-          <p class="news-sub-time">Noticia 3</p>
-        </div>
-      </div>
-
-      <!-- Enlace a la sección completa de noticias dentro de href="" -->
-      <div class="news-footer">
-        <a
-          href="https://sites.google.com/correomc.com/portal-coporativo-micasino/noticias"
-          class="news-all-link"
-        >
-          Ver todas las noticias
-          <span class="material-symbols-outlined" style="font-size: 16px"
-            >arrow_forward</span
-          >
-        </a>
-      </div>
+  <div class="news-header">
+    <div class="badge-channel">
+      <span class="badge-dot"></span>
+      Canal de Comunicación Interna
     </div>
+    <!-- =========================== TITULO =========================== -->
+    <h1 class="main-title">Noticias y Novedades Corporativas</h1>
 
-    <!-- 2. BLOQUE DERECHO: CROUPIER Y FORMULARIOS -->
-    <div class="col-side">
-      <!-- Tarjeta Destacada: Asistente Virtual Croupier -->
-      <div class="croupier-card">
-        <div class="croupier-card-glow"></div>
-        <div>
-          <div class="bot-icon-wrapper">
-            <span
-              class="material-symbols-outlined"
-              style="font-variation-settings: &quot;FILL&quot; 1"
-              >smart_toy</span
-            >
-          </div>
-          <h3 class="croupier-title">Pregúntale a Croupier</h3>
-          <p class="croupier-desc">
-            Tu asistente virtual para dudas rápidas de RRHH y TI.
-          </p>
-        </div>
-        <div class="croupier-link">
-          Abrir Chat
-          <span class="material-symbols-outlined" style="font-size: 14px"
-            >open_in_new</span
-          >
-        </div>
-      </div>
-
-      <!-- Lista de Formularios Frecuentes -->
-      <div class="card" style="padding: 24px; flex-grow: 1">
-        <h3 class="card-title" style="margin-bottom: 24px">
-          <span class="material-symbols-outlined">description</span> Formularios
-          más usados
-        </h3>
-
-        <ul class="forms-list">
-          <!-- Formulario 1, link dentro de href="" -->
-          <li>
-            <a
-              href="https://app.notion.com/native/p/mcgroupvenezuela/Reporte-de-salidas-1c7a6bf84cf780c4a86afbcb25464dd3?source=copy_link"
-              class="form-item-link"
-            >
-              <div class="form-item-content">
-                <span class="material-symbols-outlined form-item-icon"
-                  >beach_access</span
-                >
-                <span class="form-item-text">Reporte de Salidas</span>
-              </div>
-              <span class="material-symbols-outlined form-item-arrow"
-                >arrow_right</span
-              >
-            </a>
-          </li>
-
-          <!-- Formulario 2, link dentro de href="" -->
-          <li>
-            <a
-              href="https://www.notion.so/mcgroupvenezuela/Formulario-de-Incidencias-y-Requerimientos-196a6bf84cf780dc9e00ef2382d7ed26?source=copy_link"
-              class="form-item-link"
-            >
-              <div class="form-item-content">
-                <span class="material-symbols-outlined form-item-icon"
-                  >build_circle</span
-                >
-                <span class="form-item-text"
-                  >Formulario de Requerimientos e Incidencias</span
-                >
-              </div>
-              <span class="material-symbols-outlined form-item-arrow"
-                >arrow_right</span
-              >
-            </a>
-          </li>
-
-          <!-- Formulario 3, link dentro de href="" -->
-          <li>
-            <a
-              href="https://app.notion.com/native/p/mcgroupvenezuela/Formulario-de-permisos-Notion-y-Workspace-24fa6bf84cf780fdbbb9eeeb3e82df17?source=copy_link"
-              class="form-item-link"
-            >
-              <div class="form-item-content">
-                <span class="material-symbols-outlined form-item-icon"
-                  >lock_open</span
-                >
-                <span class="form-item-text"
-                  >Solicitud de Permisos en Notion y Workspace</span
-                >
-              </div>
-              <span class="material-symbols-outlined form-item-arrow"
-                >arrow_right</span
-              >
-            </a>
-          </li>
-        </ul>
-
-        <!-- Footer de Formularios, link a todos los formularios dentro de href="" -->
-        <div class="forms-footer">
-          <a
-            href="https://sites.google.com/correomc.com/portal-coporativo-micasino/formularios"
-            class="forms-footer-cta"
-          >
-            Ver todos los Formularios
-            <span class="material-symbols-outlined" style="font-size: 16px"
-              >arrow_forward</span
-            >
-          </a>
-        </div>
-      </div>
-    </div>
-  </section>
+    <!-- =========================== PARRAFO =========================== -->
+    <p>
+      Información oficial, actualizaciones de proyectos clave, eventos
+      corporativos y comunicados estratégicos para todos los colaboradores de
+      Micasino.
+    </p>
+  </div>
 </html>
-
-<!-- ================= SCRIPT INTERACTIVO DEL CARRUSEL ================= -->
-<script>
-  // ----------------------------------------------------------------
-  // DATOS EDITABLES DEL CARRUSEL
-  // Edite los textos o rutas de imagen dentro de las comillas " "
-  // ----------------------------------------------------------------
-  const slidesData = [
-    {
-      src: "https://i.ibb.co/fYb8r2Xx/Cierre-Peru.png",
-      alt: "Cierre-Peru",
-      badge: "Corporativo",
-      title: "Notificación del cierre de operaciones en Perú",
-      desc: "Información importante sobre la culminación de nuestras operaciones en el mercado peruano y el cronograma de transición.",
-    },
-    {
-      src: "https://i.ibb.co/TDsGnpdX/Nuevo-Portal.png",
-      alt: "Nuevo-Portal",
-      badge: "Tecnología",
-      title: "Creación del Nuevo portal Intranet Micasino",
-      desc: "Damos la bienvenida a nuestra nueva plataforma centralizada, diseñada para optimizar la comunicación interna y los procesos diarios.",
-    },
-    {
-      src: "https://i.ibb.co/Zp9DfStV/Solicitud-Cy-P.png",
-      alt: "Solicitud-Cy-P",
-      badge: "Procesos",
-      title:
-        "Esta disponible el nuevo formulario de solicitudes a Control y Procesos",
-      desc: "Gestiona tus requerimientos de auditoría y procesos de forma más rápida a través del nuevo formulario digital interactivo.",
-    },
-  ];
-
-  let currentSlide = 0;
-  let autoplayTimer = null;
-
-  // Elementos del DOM
-  const imgEl = document.getElementById("carousel-img");
-  const badgeEl = document.getElementById("carousel-badge");
-  const titleEl = document.getElementById("carousel-title");
-  const descEl = document.getElementById("carousel-desc");
-  const navItems = document.querySelectorAll(".news-sub-item");
-
-  function updateSlide(index) {
-    currentSlide = index;
-    const slide = slidesData[currentSlide];
-
-    // Animación de transición suave
-    imgEl.style.opacity = 0;
-
-    setTimeout(() => {
-      imgEl.src = slide.src;
-      imgEl.alt = slide.alt;
-      badgeEl.textContent = slide.badge;
-      titleEl.textContent = slide.title;
-      descEl.textContent = slide.desc;
-      imgEl.style.opacity = 1;
-    }, 200);
-
-    // Actualización de pestaña activa
-    navItems.forEach((item, i) => {
-      if (i === currentSlide) {
-        item.classList.add("active");
-      } else {
-        item.classList.remove("active");
-      }
-    });
-
-    resetAutoplay();
-  }
-
-  function nextSlide() {
-    let nextIndex = (currentSlide + 1) % slidesData.length;
-    updateSlide(nextIndex);
-  }
-
-  function prevSlide() {
-    let prevIndex = (currentSlide - 1 + slidesData.length) % slidesData.length;
-    updateSlide(prevIndex);
-  }
-
-  function goToSlide(index) {
-    updateSlide(index);
-  }
-
-  function startAutoplay() {
-    autoplayTimer = setInterval(nextSlide, 8000); // Frecuencia de cambio (8 segundos)
-  }
-
-  function resetAutoplay() {
-    clearInterval(autoplayTimer);
-    startAutoplay();
-  }
-
-  // Eventos de botones
-  document.getElementById("btn-next").addEventListener("click", nextSlide);
-  document.getElementById("btn-prev").addEventListener("click", prevSlide);
-
-  // Inicializar estado del carrusel
-  updateSlide(0);
-  startAutoplay();
-</script>
